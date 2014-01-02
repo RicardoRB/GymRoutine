@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Gym Routine</string>
+    <!-- Activities titles -->
+    <string name="title_activity_chronometer">Chronometer</string>
+    <string name="title_activity_routines">Routines</string>
+    <string name="title_activity_add_routine">Add routine</string>
+    <string name="title_activity_days_routine">Days Routine</string>
+    <string name="title_activity_choose_exercises">ChooseExercisesActivity</string>
+    <!-- Submenus -->
+    <string name="action_settings">Settings</string>
+    <string name="action_music">Music</string>
+    <string name="action_add_routine">Add new routine</string>
+    <string name="action_run_crono">Keep chronometer running</string>
+    <string name="action_routineDone">Done</string>
+    <!-- Botones -->
+    <string name="btn_reset">Reset</string>
+    <string name="btn_next">Next</string>
+    <!-- Etiquetas -->
+    <string name="txt_monday">Monday</string>
+    <string name="txt_tuesday">Tuesday</string>
+    <string name="txt_wednesday">Wednesday</string>
+    <string name="txt_thurdsay">Thursday</string>
+    <string name="txt_friday">Friday</string>
+    <string name="txt_saturday">Saturday</string>
+    <string name="txt_sunday">Sunday</string>
+    <string name="txt_routineName">Routine Name</string>
+    <string name="txt_daysWeek">Days for week</string>
+    <string name="txt_sets">Sets</string>
+    <string name="txt_repetitions">Repetitions</string>
+    <!-- Arrays -->
+    <string-array name="array_muscles">
+        <item>Chest</item>
+        <item>Back</item>
+        <item>Biceps</item>
+        <item>Triceps</item>
+        <item>Shoulders</item>
+        <item>Legs</item>
+        <item>Forearms</item>
+        <item>Abdominals</item>
+        <item>Cardio</item>
+    </string-array>
+    <string-array name="array_days">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+    </string-array>
+    <!-- Context Menu -->
+    <string name="context_open">Open</string>
+    <string name="context_modify">Modify</string>
+    <string name="context_delete">Delete</string>
+    <!-- Tab -->
+    <string name="tab_day">Day</string>
+    <!-- Alert Dialog -->
+    <string name="alert_title_nameRoutine">Name Routine</string>
+    <string name="alert_message_nameRoutine">You must insert a name first</string>
+    <string name="title_section1">Section 1</string>
+    <string name="title_section2">Section 2</string>
+    <string name="title_section3">Section 3</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="action_example">Example action</string>
+    <string name="hello_world">Hello world!</string>
+
+</resources>
