@@ -28,8 +28,10 @@ public class DaysRoutineActivity extends ActionBarActivity implements ActionBar.
      * {@link android.support.v4.app.FragmentStatePagerAdapter}.
      */
     PagerAdapter mSectionsPagerAdapter;
-    boolean checked[][];
+    boolean checked[];
     List<Fragment> fragments = new Vector<Fragment>();
+    int numDays;
+    String nameRoutine;
 
     /**
      * The {@link ViewPager} that will host the section contents.
@@ -44,17 +46,22 @@ public class DaysRoutineActivity extends ActionBarActivity implements ActionBar.
         // Set up the action bar.
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-        int numDays = getIntent().getExtras().getInt("numDays");
-        //String nameRoutine = getIntent().getExtras().getString("nameRoutine");
+        numDays = getIntent().getExtras().getInt("numDays");
+        //Name of the file
+        nameRoutine = getIntent().getExtras().getString("nameRoutine");
+        if (getIntent().getExtras().getBooleanArray("checkedBoolean") != null) {
+            for (int i = 0; i < numDays; i++) {
+                fragments.add(Fragment.instantiate(this, ChooseExercisesActivity.class.getName()));
+            }
+        } else {
+            // Create the adapter that will return a fragment for each of the three
+            // primary sections of the activity.
+            for (int i = 0; i < numDays; i++) {
+                fragments.add(Fragment.instantiate(this, ChooseMusclesActivity.class.getName()));
+            }
 
-        // Create the adapter that will return a fragment for each of the three
-        // primary sections of the activity.
-        for(int i= 0;i<numDays;i++){
-            fragments.add(Fragment.instantiate(this, ChooseMusclesActivity.class.getName()));
+            checked = new boolean[numDays * getResources().getStringArray(R.array.array_muscles).length];
         }
-
-        checked = new boolean[numDays][getResources().getStringArray(R.array.array_muscles).length];
-
         mSectionsPagerAdapter = new PagerAdapter(this.getSupportFragmentManager(), fragments);
 
         // Set up the ViewPager with the sections adapter.
@@ -79,7 +86,7 @@ public class DaysRoutineActivity extends ActionBarActivity implements ActionBar.
             // this tab is selected.
             actionBar.addTab(
                     actionBar.newTab()
-                            .setText(getResources().getString(R.string.tab_day) + " " +(i+1))
+                            .setText(getResources().getString(R.string.tab_day) + " " + (i + 1))
                             .setTabListener(this));
         }
     }
@@ -87,7 +94,7 @@ public class DaysRoutineActivity extends ActionBarActivity implements ActionBar.
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        
+
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.days_routine, menu);
         return true;
@@ -101,7 +108,9 @@ public class DaysRoutineActivity extends ActionBarActivity implements ActionBar.
         int id = item.getItemId();
         if (id == R.id.action_routineDone) {
             Intent i = new Intent(this, DaysRoutineActivity.class);
-            i.putExtra("checkedBoolean", checked);
+            i.putExtra("checkedBoolean", this.checked);
+            i.putExtra("numDays", this.numDays);
+            i.putExtra("nameRoutine", this.nameRoutine);
             startActivity(i);
             return true;
         }
@@ -123,10 +132,10 @@ public class DaysRoutineActivity extends ActionBarActivity implements ActionBar.
     public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
     }
 
-    public void setChecked(int position,boolean check, Fragment fragment){
-        for(int i = 0; i<fragments.size(); i++){
-            if(fragments.get(i).equals(fragment)){
-                checked[i][position] = check;
+    public void setChecked(int position, boolean check, Fragment fragment) {
+        for (int i = 0; i < fragments.size(); i++) {
+            if (fragments.get(i).equals(fragment)) {
+                checked[((i + 1) * position)] = check;
             }
         }
     }

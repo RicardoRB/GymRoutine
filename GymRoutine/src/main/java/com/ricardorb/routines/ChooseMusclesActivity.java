@@ -22,7 +22,7 @@ public class ChooseMusclesActivity extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_choose_exercises, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_choose_muscles, container, false);
         ListView lv = (ListView) rootView.findViewById(R.id.lvExercises);
         String muscles[] = getResources().getStringArray(R.array.array_muscles);
         lv.setAdapter(new ArrayAdapter<String>(getActivity(),android.R.layout.simple_list_item_multiple_choice, muscles));
