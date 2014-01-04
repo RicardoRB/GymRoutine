@@ -18,13 +18,6 @@
     <string name="btn_reset">Reset</string>
     <string name="btn_next">Next</string>
     <!-- Etiquetas -->
-    <string name="txt_monday">Monday</string>
-    <string name="txt_tuesday">Tuesday</string>
-    <string name="txt_wednesday">Wednesday</string>
-    <string name="txt_thurdsay">Thursday</string>
-    <string name="txt_friday">Friday</string>
-    <string name="txt_saturday">Saturday</string>
-    <string name="txt_sunday">Sunday</string>
     <string name="txt_routineName">Routine Name</string>
     <string name="txt_daysWeek">Days for week</string>
     <string name="txt_sets">Sets</string>
@@ -40,6 +33,15 @@
         <item>Forearms</item>
         <item>Abdominals</item>
         <item>Cardio</item>
+    </string-array>
+    <string-array name="array_week">
+        <item>Monday</item>
+        <item>Tuesday</item>
+        <item>Wednesday</item>
+        <item>Thursday</item>
+        <item>Friday</item>
+        <item>Saturday</item>
+        <item>Sunday</item>
     </string-array>
     <string-array name="array_days">
         <item>1</item>

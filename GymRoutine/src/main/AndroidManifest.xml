@@ -32,7 +32,7 @@
             android:label="@string/title_activity_days_routine" >
         </activity>
         <activity
-            android:name="com.ricardorb.routines.ChooseExercisesActivity"
+            android:name="com.ricardorb.routines.ChooseMusclesActivity"
             android:label="@string/title_activity_choose_exercises" >
         </activity>
     </application>

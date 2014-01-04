@@ -3,8 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.ricardorb.routines.DaysRoutineActivity" >
     
-    <item android:id="@+id/action_settings"
-        android:title="@string/action_settings"
+    <item android:id="@+id/action_routineDone"
+        android:title="@string/action_routineDone"
         android:orderInCategory="100"
         app:showAsAction="never" />
 </menu>

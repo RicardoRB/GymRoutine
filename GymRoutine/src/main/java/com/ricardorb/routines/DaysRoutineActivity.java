@@ -3,6 +3,7 @@ package com.ricardorb.routines;
 import java.util.List;
 import java.util.Vector;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
@@ -14,9 +15,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.ricardorb.adapters.PagerAdapter;
-import com.ricardorb.gymroutine.ChronometerActivity;
 import com.ricardorb.gymroutine.R;
-import com.ricardorb.gymroutine.RoutinesActivity;
 
 public class DaysRoutineActivity extends ActionBarActivity implements ActionBar.TabListener {
 
@@ -29,6 +28,8 @@ public class DaysRoutineActivity extends ActionBarActivity implements ActionBar.
      * {@link android.support.v4.app.FragmentStatePagerAdapter}.
      */
     PagerAdapter mSectionsPagerAdapter;
+    boolean checked[][];
+    List<Fragment> fragments = new Vector<Fragment>();
 
     /**
      * The {@link ViewPager} that will host the section contents.
@@ -44,14 +45,15 @@ public class DaysRoutineActivity extends ActionBarActivity implements ActionBar.
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
         int numDays = getIntent().getExtras().getInt("numDays");
-        String nameRoutine = getIntent().getExtras().getString("nameRoutine");
+        //String nameRoutine = getIntent().getExtras().getString("nameRoutine");
 
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
-        List<Fragment> fragments = new Vector<Fragment>();
         for(int i= 0;i<numDays;i++){
-            fragments.add(Fragment.instantiate(this, ChooseExercisesActivity.class.getName()));
+            fragments.add(Fragment.instantiate(this, ChooseMusclesActivity.class.getName()));
         }
+
+        checked = new boolean[numDays][getResources().getStringArray(R.array.array_muscles).length];
 
         mSectionsPagerAdapter = new PagerAdapter(this.getSupportFragmentManager(), fragments);
 
@@ -97,7 +99,10 @@ public class DaysRoutineActivity extends ActionBarActivity implements ActionBar.
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_routineDone) {
+            Intent i = new Intent(this, DaysRoutineActivity.class);
+            i.putExtra("checkedBoolean", checked);
+            startActivity(i);
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -116,6 +121,14 @@ public class DaysRoutineActivity extends ActionBarActivity implements ActionBar.
 
     @Override
     public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
+    }
+
+    public void setChecked(int position,boolean check, Fragment fragment){
+        for(int i = 0; i<fragments.size(); i++){
+            if(fragments.get(i).equals(fragment)){
+                checked[i][position] = check;
+            }
+        }
     }
 
 }
