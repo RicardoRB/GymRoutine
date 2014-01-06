@@ -36,8 +36,9 @@ public class ChooseExercisesActivity extends Fragment {
         int numMuscles = getResources().getStringArray(R.array.array_muscles).length;
         String[] muscles = getResources().getStringArray(R.array.array_muscles);
 
+        int indexDayArray = (fragmentDay == 1 ? 0 : ((fragmentDay * numMuscles) - numMuscles));
         int j = 0;
-        for (int i = ((fragmentDay * numMuscles) - numMuscles); i < (fragmentDay * numMuscles); i++) {
+        for (int i = indexDayArray; i < (fragmentDay * numMuscles); i++) {
             if (checked[i]) {
                 items.add(new SectionItem(muscles[j]));
                 switch (j) {

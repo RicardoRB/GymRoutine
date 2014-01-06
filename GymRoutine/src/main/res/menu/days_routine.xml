@@ -4,7 +4,8 @@
     tools:context="com.ricardorb.routines.DaysRoutineActivity" >
     
     <item android:id="@+id/action_routineDone"
+        android:icon="@android:drawable/checkbox_on_background"
         android:title="@string/action_routineDone"
         android:orderInCategory="100"
-        app:showAsAction="never" />
+        app:showAsAction="ifRoom" />
 </menu>

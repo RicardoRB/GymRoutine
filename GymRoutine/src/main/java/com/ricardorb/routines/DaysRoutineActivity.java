@@ -32,6 +32,7 @@ public class DaysRoutineActivity extends ActionBarActivity implements ActionBar.
     List<Fragment> fragments = new Vector<Fragment>();
     int numDays;
     String nameRoutine;
+    boolean fromMusclesFragments;
 
     /**
      * The {@link ViewPager} that will host the section contents.
@@ -45,16 +46,19 @@ public class DaysRoutineActivity extends ActionBarActivity implements ActionBar.
 
         // Set up the action bar.
         final ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
         numDays = getIntent().getExtras().getInt("numDays");
         //Name of the file
         nameRoutine = getIntent().getExtras().getString("nameRoutine");
         if (getIntent().getExtras().getBooleanArray("checkedBoolean") != null) {
+            this.fromMusclesFragments = false;
             checked = getIntent().getExtras().getBooleanArray("checkedBoolean");
             for (int i = 0; i < numDays; i++) {
                 fragments.add(Fragment.instantiate(this, ChooseExercisesActivity.class.getName()));
             }
         } else {
+            fromMusclesFragments = true;
             // Create the adapter that will return a fragment for each of the three
             // primary sections of the activity.
             for (int i = 0; i < numDays; i++) {
@@ -92,6 +96,18 @@ public class DaysRoutineActivity extends ActionBarActivity implements ActionBar.
         }
     }
 
+    @Override
+    public Intent getSupportParentActivityIntent() {
+        if (getIntent().getExtras().getBooleanArray("checkedBoolean") != null) {
+            Intent i = new Intent(this, DaysRoutineActivity.class);
+            i.putExtra("numDays", this.numDays);
+            i.putExtra("nameRoutine", this.nameRoutine);
+            return i;
+        }else{
+            Intent i2 = new Intent(this, AddRoutineActivity.class);
+            return i2;
+        }
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -107,7 +123,7 @@ public class DaysRoutineActivity extends ActionBarActivity implements ActionBar.
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-        if (id == R.id.action_routineDone) {
+        if (id == R.id.action_routineDone && fromMusclesFragments) {
             Intent i = new Intent(this, DaysRoutineActivity.class);
             i.putExtra("checkedBoolean", this.checked);
             i.putExtra("numDays", this.numDays);
