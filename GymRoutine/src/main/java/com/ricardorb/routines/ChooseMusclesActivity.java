@@ -23,18 +23,18 @@ public class ChooseMusclesActivity extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_choose_muscles, container, false);
-        ListView lv = (ListView) rootView.findViewById(R.id.lvExercises);
+        ListView lv = (ListView) rootView.findViewById(R.id.lvMuscles);
         String muscles[] = getResources().getStringArray(R.array.array_muscles);
-        lv.setAdapter(new ArrayAdapter<String>(getActivity(),android.R.layout.simple_list_item_multiple_choice, muscles));
+        lv.setAdapter(new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_multiple_choice, muscles));
         lv.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                CheckedTextView item = (CheckedTextView)view;
-                if(item.isChecked()){
-                    ((DaysRoutineActivity)getActivity()).setChecked(position,false,ChooseMusclesActivity.this);
-                }else{
-                    ((DaysRoutineActivity)getActivity()).setChecked(position,true,ChooseMusclesActivity.this);
+                CheckedTextView item = (CheckedTextView) view;
+                if (item.isChecked()) {
+                    ((DaysRoutineActivity) getActivity()).setChecked(position, false, ChooseMusclesActivity.this);
+                } else {
+                    ((DaysRoutineActivity) getActivity()).setChecked(position, true, ChooseMusclesActivity.this);
                 }
             }
         });

@@ -50,6 +50,7 @@ public class DaysRoutineActivity extends ActionBarActivity implements ActionBar.
         //Name of the file
         nameRoutine = getIntent().getExtras().getString("nameRoutine");
         if (getIntent().getExtras().getBooleanArray("checkedBoolean") != null) {
+            checked = getIntent().getExtras().getBooleanArray("checkedBoolean");
             for (int i = 0; i < numDays; i++) {
                 fragments.add(Fragment.instantiate(this, ChooseExercisesActivity.class.getName()));
             }
@@ -133,11 +134,27 @@ public class DaysRoutineActivity extends ActionBarActivity implements ActionBar.
     }
 
     public void setChecked(int position, boolean check, Fragment fragment) {
+        int numMuscles = getResources().getStringArray(R.array.array_muscles).length;
+
         for (int i = 0; i < fragments.size(); i++) {
             if (fragments.get(i).equals(fragment)) {
-                checked[((i + 1) * position)] = check;
+                checked[((i * numMuscles) + position)] = check;
+                break;
             }
         }
+    }
+
+    public boolean[] getChecked() {
+        return this.checked;
+    }
+
+    public int getFragmentDay(Fragment fragment) {
+        for (int i = 0; i < fragments.size(); i++) {
+            if (fragments.get(i).equals(fragment)) {
+                return (i + 1);
+            }
+        }
+        return -1;
     }
 
 }
