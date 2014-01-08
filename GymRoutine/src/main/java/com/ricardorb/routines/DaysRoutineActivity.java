@@ -28,7 +28,8 @@ public class DaysRoutineActivity extends ActionBarActivity implements ActionBar.
      * {@link android.support.v4.app.FragmentStatePagerAdapter}.
      */
     PagerAdapter mSectionsPagerAdapter;
-    boolean checked[];
+    boolean checkedMuscles[];
+    boolean checkedExercises[][][];
     List<Fragment> fragments = new Vector<Fragment>();
     int numDays;
     String nameRoutine;
@@ -49,14 +50,39 @@ public class DaysRoutineActivity extends ActionBarActivity implements ActionBar.
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
         numDays = getIntent().getExtras().getInt("numDays");
+
         //Name of the file
         nameRoutine = getIntent().getExtras().getString("nameRoutine");
         if (getIntent().getExtras().getBooleanArray("checkedBoolean") != null) {
             this.fromMusclesFragments = false;
-            checked = getIntent().getExtras().getBooleanArray("checkedBoolean");
+            if (savedInstanceState != null) {
+                checkedMuscles = savedInstanceState.getBooleanArray("checkedMuscles");
+            } else {
+                checkedMuscles = getIntent().getExtras().getBooleanArray("checkedBoolean");
+            }
+            if (savedInstanceState != null) {
+
+                int iLength = savedInstanceState.getInt("iLength");
+                int jLength = savedInstanceState.getInt("jLength");
+                int cLength = savedInstanceState.getInt("cLength");
+                //Getting 3 dimensional array
+                boolean exercises[][][] = new boolean[iLength][jLength][cLength];
+                for (int i = 0; i < iLength; i++) {
+                    for (int j = 0; j < savedInstanceState.getInt("j" + i); j++) {
+                        boolean xExercises[] = savedInstanceState.getBooleanArray("checkedExercises" + i + " " + j);
+                        exercises[i][j] = xExercises.clone();
+                    }
+                }
+                this.checkedExercises = exercises.clone();
+
+            } else {
+                checkedExercises = new boolean[numDays][getResources().getStringArray(R.array.array_muscles).length][getResources().getStringArray(R.array.array_legs_exercises).length];
+            }
+
             for (int i = 0; i < numDays; i++) {
                 fragments.add(Fragment.instantiate(this, ChooseExercisesActivity.class.getName()));
             }
+
         } else {
             fromMusclesFragments = true;
             // Create the adapter that will return a fragment for each of the three
@@ -64,8 +90,11 @@ public class DaysRoutineActivity extends ActionBarActivity implements ActionBar.
             for (int i = 0; i < numDays; i++) {
                 fragments.add(Fragment.instantiate(this, ChooseMusclesActivity.class.getName()));
             }
-
-            checked = new boolean[numDays * getResources().getStringArray(R.array.array_muscles).length];
+            if (savedInstanceState != null) {
+                checkedMuscles = savedInstanceState.getBooleanArray("checkedMuscles");
+            } else {
+                checkedMuscles = new boolean[numDays * getResources().getStringArray(R.array.array_muscles).length];
+            }
         }
         mSectionsPagerAdapter = new PagerAdapter(this.getSupportFragmentManager(), fragments);
 
@@ -103,10 +132,8 @@ public class DaysRoutineActivity extends ActionBarActivity implements ActionBar.
             i.putExtra("numDays", this.numDays);
             i.putExtra("nameRoutine", this.nameRoutine);
             return i;
-        }else{
-            Intent i2 = new Intent(this, AddRoutineActivity.class);
-            
-            return i2;
+        } else {
+            return new Intent(this, AddRoutineActivity.class);
         }
     }
 
@@ -126,13 +153,42 @@ public class DaysRoutineActivity extends ActionBarActivity implements ActionBar.
         int id = item.getItemId();
         if (id == R.id.action_routineDone && fromMusclesFragments) {
             Intent i = new Intent(this, DaysRoutineActivity.class);
-            i.putExtra("checkedBoolean", this.checked);
+            i.putExtra("checkedBoolean", this.checkedMuscles);
             i.putExtra("numDays", this.numDays);
             i.putExtra("nameRoutine", this.nameRoutine);
             startActivity(i);
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        //Saving a 3 dimension array
+        if (this.checkedExercises != null) {
+            outState.putInt("iLength", checkedExercises.length);
+            int jLength = 0;
+            int cLength = 0;
+            for (int i = 0; i < checkedExercises.length; i++) {
+                outState.putInt("j" + i, checkedExercises[i].length);
+                for (int j = 0; j < checkedExercises[i].length; j++) {
+                    if (checkedExercises[i].length > jLength) {
+                        jLength = checkedExercises[i].length;
+                    }
+                    if (this.checkedExercises[i][j].length > cLength) {
+                        cLength = this.checkedExercises[i][j].length;
+                    }
+                    outState.putBooleanArray("checkedExercises" + i + " " + j, this.checkedExercises[i][j]);
+                }
+            }
+            outState.putInt("jLength", jLength);
+            outState.putInt("cLength", cLength);
+        }
+        outState.putBooleanArray("checkedMuscles", this.checkedMuscles);
+        outState.putString("nameRoutine", this.nameRoutine);
+        outState.putBoolean("fromMusclesFragments", this.fromMusclesFragments);
+
+        super.onSaveInstanceState(outState);
     }
 
     @Override
@@ -150,19 +206,113 @@ public class DaysRoutineActivity extends ActionBarActivity implements ActionBar.
     public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
     }
 
-    public void setChecked(int position, boolean check, Fragment fragment) {
+    public void setCheckedMuscles(int position, boolean check, Fragment fragment) {
         int numMuscles = getResources().getStringArray(R.array.array_muscles).length;
 
         for (int i = 0; i < fragments.size(); i++) {
             if (fragments.get(i).equals(fragment)) {
-                checked[((i * numMuscles) + position)] = check;
+                checkedMuscles[((i * numMuscles) + position)] = check;
                 break;
             }
         }
     }
 
-    public boolean[] getChecked() {
-        return this.checked;
+    public void setCheckedExercises(String nameExercise, boolean check, int fragmentDay) {
+        int numMuscles = getResources().getStringArray(R.array.array_muscles).length;
+        for (int i = 0; i < fragments.size(); i++) {
+            if ((fragmentDay - 1) == i) {
+                int indexDayArray = (i == 0 ? 0 : (((i + 1) * numMuscles) - numMuscles));
+
+                for (int j = indexDayArray; j < ((i + 1) * numMuscles); j++) {
+                    if (checkedMuscles[j]) {
+                        switch (j) {
+                            case 0:
+                                String[] chest = getResources().getStringArray(R.array.array_chest_exercises);
+                                for (int c = 0; c < chest.length; c++) {
+                                    if (nameExercise.equals(chest[c])) {
+                                        checkedExercises[i][j][c] = check;
+                                    }
+                                }
+
+                                break;
+                            case 1:
+                                String[] back = getResources().getStringArray(R.array.array_back_exercises);
+                                for (int c = 0; c < back.length; c++) {
+                                    if (nameExercise.equals(back[c])) {
+                                        checkedExercises[i][j][c] = check;
+                                    }
+                                }
+                                break;
+                            case 2:
+                                String[] biceps = getResources().getStringArray(R.array.array_biceps_exercises);
+                                for (int c = 0; c < biceps.length; c++) {
+                                    if (nameExercise.equals(biceps[c])) {
+                                        checkedExercises[i][j][c] = check;
+                                    }
+                                }
+                                break;
+                            case 3:
+                                String[] triceps = getResources().getStringArray(R.array.array_triceps_exercises);
+                                for (int c = 0; c < triceps.length; c++) {
+                                    if (nameExercise.equals(triceps[c])) {
+                                        checkedExercises[i][j][c] = check;
+                                    }
+                                }
+                                break;
+                            case 4:
+                                String[] shoulders = getResources().getStringArray(R.array.array_shoulders_exercises);
+                                for (int c = 0; c < shoulders.length; c++) {
+                                    if (nameExercise.equals(shoulders[c])) {
+                                        checkedExercises[i][j][c] = check;
+                                    }
+                                }
+                                break;
+                            case 5:
+                                String[] legs = getResources().getStringArray(R.array.array_legs_exercises);
+                                for (int c = 0; c < legs.length; c++) {
+                                    if (nameExercise.equals(legs[c])) {
+                                        checkedExercises[i][j][c] = check;
+                                    }
+                                }
+                                break;
+                            case 6:
+                                String[] forearms = getResources().getStringArray(R.array.array_forearms_exercises);
+                                for (int c = 0; c < forearms.length; c++) {
+                                    if (nameExercise.equals(forearms[c])) {
+                                        checkedExercises[i][j][c] = check;
+                                    }
+                                }
+                                break;
+                            case 7:
+                                String[] abdominals = getResources().getStringArray(R.array.array_abdominals_exercises);
+                                for (int c = 0; c < abdominals.length; c++) {
+                                    if (nameExercise.equals(abdominals[c])) {
+                                        checkedExercises[i][j][c] = check;
+                                    }
+                                }
+                                break;
+                            default:
+                                String[] cardio = getResources().getStringArray(R.array.array_cardio_exercises);
+                                for (int c = 0; c < cardio.length; c++) {
+                                    if (nameExercise.equals(cardio[c])) {
+                                        checkedExercises[i][j][c] = check;
+                                    }
+                                }
+                                break;
+                        }
+                    }
+                }
+                break;
+            }
+        }
+    }
+
+    public boolean[][][] getCheckedExercises() {
+        return this.checkedExercises;
+    }
+
+    public boolean[] getCheckedMuscles() {
+        return this.checkedMuscles;
     }
 
     public int getFragmentDay(Fragment fragment) {

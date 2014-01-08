@@ -96,6 +96,7 @@ public class AddRoutineActivity extends ActionBarActivity {
             });
             return rootView;
         }
+
     }
 
 }

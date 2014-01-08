@@ -14,14 +14,15 @@
     <string name="action_add_routine">Add new routine</string>
     <string name="action_run_crono">Keep chronometer running</string>
     <string name="action_routineDone">Done</string>
-    <!-- Botones -->
+    <!-- Buttons -->
     <string name="btn_reset">Reset</string>
     <string name="btn_next">Next</string>
-    <!-- Etiquetas -->
+    <!-- Tags -->
     <string name="txt_routineName">Routine Name</string>
     <string name="txt_daysWeek">Days for week</string>
     <string name="txt_sets">Sets</string>
     <string name="txt_repetitions">Repetitions</string>
+    <string name="txt_time">Time</string>
     <!-- Arrays -->
     <string-array name="array_muscles">
         <item>Chest</item>

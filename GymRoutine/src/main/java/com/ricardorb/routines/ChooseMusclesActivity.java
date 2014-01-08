@@ -32,9 +32,9 @@ public class ChooseMusclesActivity extends Fragment {
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
                 CheckedTextView item = (CheckedTextView) view;
                 if (item.isChecked()) {
-                    ((DaysRoutineActivity) getActivity()).setChecked(position, false, ChooseMusclesActivity.this);
+                    ((DaysRoutineActivity) getActivity()).setCheckedMuscles(position, false, ChooseMusclesActivity.this);
                 } else {
-                    ((DaysRoutineActivity) getActivity()).setChecked(position, true, ChooseMusclesActivity.this);
+                    ((DaysRoutineActivity) getActivity()).setCheckedMuscles(position, true, ChooseMusclesActivity.this);
                 }
             }
         });
