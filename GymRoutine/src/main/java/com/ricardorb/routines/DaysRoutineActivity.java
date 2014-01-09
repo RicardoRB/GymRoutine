@@ -1,9 +1,16 @@
 package com.ricardorb.routines;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.util.List;
 import java.util.Vector;
 
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.Environment;
+import android.os.Handler;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
@@ -11,11 +18,15 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
+import android.util.Xml;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.ricardorb.adapters.PagerAdapter;
+import com.ricardorb.gymroutine.MainActivity;
 import com.ricardorb.gymroutine.R;
+
+import org.xmlpull.v1.XmlSerializer;
 
 public class DaysRoutineActivity extends ActionBarActivity implements ActionBar.TabListener {
 
@@ -133,7 +144,7 @@ public class DaysRoutineActivity extends ActionBarActivity implements ActionBar.
             i.putExtra("nameRoutine", this.nameRoutine);
             return i;
         } else {
-            return new Intent(this, AddRoutineActivity.class);
+            return new Intent(this, MainActivity.class);
         }
     }
 
@@ -158,6 +169,9 @@ public class DaysRoutineActivity extends ActionBarActivity implements ActionBar.
             i.putExtra("nameRoutine", this.nameRoutine);
             startActivity(i);
             return true;
+        }else{
+            createXML();
+            startActivity(new Intent(this, MainActivity.class));
         }
         return super.onOptionsItemSelected(item);
     }
@@ -218,11 +232,11 @@ public class DaysRoutineActivity extends ActionBarActivity implements ActionBar.
     }
 
     public void setCheckedExercises(String nameExercise, boolean check, int fragmentDay) {
+        int countMuscle = 0;
         int numMuscles = getResources().getStringArray(R.array.array_muscles).length;
-        for (int i = 0; i < fragments.size(); i++) {
+        for (int i = 0; i < numDays; i++) {
             if ((fragmentDay - 1) == i) {
                 int indexDayArray = (i == 0 ? 0 : (((i + 1) * numMuscles) - numMuscles));
-
                 for (int j = indexDayArray; j < ((i + 1) * numMuscles); j++) {
                     if (checkedMuscles[j]) {
                         switch (j) {
@@ -230,7 +244,7 @@ public class DaysRoutineActivity extends ActionBarActivity implements ActionBar.
                                 String[] chest = getResources().getStringArray(R.array.array_chest_exercises);
                                 for (int c = 0; c < chest.length; c++) {
                                     if (nameExercise.equals(chest[c])) {
-                                        checkedExercises[i][j][c] = check;
+                                        checkedExercises[i][countMuscle][c] = check;
                                     }
                                 }
 
@@ -239,7 +253,7 @@ public class DaysRoutineActivity extends ActionBarActivity implements ActionBar.
                                 String[] back = getResources().getStringArray(R.array.array_back_exercises);
                                 for (int c = 0; c < back.length; c++) {
                                     if (nameExercise.equals(back[c])) {
-                                        checkedExercises[i][j][c] = check;
+                                        checkedExercises[i][countMuscle][c] = check;
                                     }
                                 }
                                 break;
@@ -247,7 +261,7 @@ public class DaysRoutineActivity extends ActionBarActivity implements ActionBar.
                                 String[] biceps = getResources().getStringArray(R.array.array_biceps_exercises);
                                 for (int c = 0; c < biceps.length; c++) {
                                     if (nameExercise.equals(biceps[c])) {
-                                        checkedExercises[i][j][c] = check;
+                                        checkedExercises[i][countMuscle][c] = check;
                                     }
                                 }
                                 break;
@@ -255,7 +269,7 @@ public class DaysRoutineActivity extends ActionBarActivity implements ActionBar.
                                 String[] triceps = getResources().getStringArray(R.array.array_triceps_exercises);
                                 for (int c = 0; c < triceps.length; c++) {
                                     if (nameExercise.equals(triceps[c])) {
-                                        checkedExercises[i][j][c] = check;
+                                        checkedExercises[i][countMuscle][c] = check;
                                     }
                                 }
                                 break;
@@ -263,7 +277,7 @@ public class DaysRoutineActivity extends ActionBarActivity implements ActionBar.
                                 String[] shoulders = getResources().getStringArray(R.array.array_shoulders_exercises);
                                 for (int c = 0; c < shoulders.length; c++) {
                                     if (nameExercise.equals(shoulders[c])) {
-                                        checkedExercises[i][j][c] = check;
+                                        checkedExercises[i][countMuscle][c] = check;
                                     }
                                 }
                                 break;
@@ -271,7 +285,7 @@ public class DaysRoutineActivity extends ActionBarActivity implements ActionBar.
                                 String[] legs = getResources().getStringArray(R.array.array_legs_exercises);
                                 for (int c = 0; c < legs.length; c++) {
                                     if (nameExercise.equals(legs[c])) {
-                                        checkedExercises[i][j][c] = check;
+                                        checkedExercises[i][countMuscle][c] = check;
                                     }
                                 }
                                 break;
@@ -279,7 +293,7 @@ public class DaysRoutineActivity extends ActionBarActivity implements ActionBar.
                                 String[] forearms = getResources().getStringArray(R.array.array_forearms_exercises);
                                 for (int c = 0; c < forearms.length; c++) {
                                     if (nameExercise.equals(forearms[c])) {
-                                        checkedExercises[i][j][c] = check;
+                                        checkedExercises[i][countMuscle][c] = check;
                                     }
                                 }
                                 break;
@@ -287,20 +301,22 @@ public class DaysRoutineActivity extends ActionBarActivity implements ActionBar.
                                 String[] abdominals = getResources().getStringArray(R.array.array_abdominals_exercises);
                                 for (int c = 0; c < abdominals.length; c++) {
                                     if (nameExercise.equals(abdominals[c])) {
-                                        checkedExercises[i][j][c] = check;
+                                        checkedExercises[i][countMuscle][c] = check;
                                     }
                                 }
                                 break;
                             default:
                                 String[] cardio = getResources().getStringArray(R.array.array_cardio_exercises);
+
                                 for (int c = 0; c < cardio.length; c++) {
                                     if (nameExercise.equals(cardio[c])) {
-                                        checkedExercises[i][j][c] = check;
+                                        checkedExercises[i][countMuscle][c] = check;
                                     }
                                 }
                                 break;
                         }
                     }
+                    countMuscle++;
                 }
                 break;
             }
@@ -322,6 +338,165 @@ public class DaysRoutineActivity extends ActionBarActivity implements ActionBar.
             }
         }
         return -1;
+    }
+
+    public void createXML() {
+
+        FileOutputStream fout = null;
+
+        try {
+            fout = new FileOutputStream(Environment.getExternalStorageDirectory()
+                    + File.separator + "GymRoutines" + File.separator + nameRoutine + ".gym");
+        } catch (FileNotFoundException e) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle(getResources().getString(R.string.alert_title_errorCreatingFile));
+            builder.setMessage(getResources().getString(R.string.alert_message_errorCreatingFile) +" "+ e.getMessage());
+            builder.setPositiveButton("OK", null);
+            builder.setIcon(R.drawable.ic_launcher);
+            builder.create().show();
+        }
+
+        final XmlSerializer serializer = Xml.newSerializer();
+
+        try {
+            serializer.setOutput(fout, "UTF-8");
+            serializer.startDocument(null, true);
+            serializer.setFeature("http://xmlpull.org/v1/doc/features.html#indent-output", true);
+
+            int numMuscles = getResources().getStringArray(R.array.array_muscles).length;
+            int countMuscle = 0;
+
+            serializer.startTag(null, "GymRoutine");
+
+            for (int i = 0; i < numDays; i++) {
+                serializer.startTag(null, "Day");
+                serializer.attribute(null, "num", String.valueOf(i));
+
+                int indexDayArray = (i == 0 ? 0 : (((i + 1) * numMuscles) - numMuscles));
+
+                for (int j = indexDayArray; j < ((i + 1) * numMuscles); j++) {
+                    if (checkedMuscles[j]) {
+                        serializer.startTag(null, "Muscle");
+                        serializer.attribute(null, "num", String.valueOf(j));
+                        switch (j) {
+                            case 0:
+                                String[] chest = getResources().getStringArray(R.array.array_chest_exercises);
+                                for (int c = 0; c < chest.length; c++) {
+                                    if (checkedExercises[i][countMuscle][c]) {
+                                        serializer.startTag(null, "Exercise");
+                                        serializer.attribute(null, "num", String.valueOf(c));
+                                        serializer.endTag(null, "Exercise");
+                                    }
+                                }
+
+                                break;
+                            case 1:
+                                String[] back = getResources().getStringArray(R.array.array_back_exercises);
+                                for (int c = 0; c < back.length; c++) {
+                                    if (checkedExercises[i][countMuscle][c]) {
+                                        serializer.startTag(null, "Exercise");
+                                        serializer.attribute(null, "num", String.valueOf(c));
+                                        serializer.endTag(null, "Exercise");
+                                    }
+                                }
+                                break;
+                            case 2:
+                                String[] biceps = getResources().getStringArray(R.array.array_biceps_exercises);
+                                for (int c = 0; c < biceps.length; c++) {
+                                    if (checkedExercises[i][countMuscle][c]) {
+                                        serializer.startTag(null, "Exercise");
+                                        serializer.attribute(null, "num", String.valueOf(c));
+                                        serializer.endTag(null, "Exercise");
+                                    }
+                                }
+                                break;
+                            case 3:
+                                String[] triceps = getResources().getStringArray(R.array.array_triceps_exercises);
+                                for (int c = 0; c < triceps.length; c++) {
+                                    if (checkedExercises[i][countMuscle][c]) {
+                                        serializer.startTag(null, "Exercise");
+                                        serializer.attribute(null, "num", String.valueOf(c));
+                                        serializer.endTag(null, "Exercise");
+                                    }
+                                }
+                                break;
+                            case 4:
+                                String[] shoulders = getResources().getStringArray(R.array.array_shoulders_exercises);
+                                for (int c = 0; c < shoulders.length; c++) {
+                                    if (checkedExercises[i][countMuscle][c]) {
+                                        serializer.startTag(null, "Exercise");
+                                        serializer.attribute(null, "num", String.valueOf(c));
+                                        serializer.endTag(null, "Exercise");
+                                    }
+                                }
+                                break;
+                            case 5:
+                                String[] legs = getResources().getStringArray(R.array.array_legs_exercises);
+                                for (int c = 0; c < legs.length; c++) {
+                                    if (checkedExercises[i][countMuscle][c]) {
+                                        serializer.startTag(null, "Exercise");
+                                        serializer.attribute(null, "num", String.valueOf(c));
+                                        serializer.endTag(null, "Exercise");
+                                    }
+                                }
+                                break;
+                            case 6:
+                                String[] forearms = getResources().getStringArray(R.array.array_forearms_exercises);
+                                for (int c = 0; c < forearms.length; c++) {
+                                    if (checkedExercises[i][countMuscle][c]) {
+                                        serializer.startTag(null, "Exercise");
+                                        serializer.attribute(null, "num", String.valueOf(c));
+                                        serializer.endTag(null, "Exercise");
+                                    }
+                                }
+                                break;
+                            case 7:
+                                String[] abdominals = getResources().getStringArray(R.array.array_abdominals_exercises);
+                                for (int c = 0; c < abdominals.length; c++) {
+                                    if (checkedExercises[i][countMuscle][c]) {
+                                        serializer.startTag(null, "Exercise");
+                                        serializer.attribute(null, "num", String.valueOf(c));
+                                        serializer.endTag(null, "Exercise");
+                                    }
+                                }
+                                break;
+                            default:
+                                String[] cardio = getResources().getStringArray(R.array.array_cardio_exercises);
+                                for (int c = 0; c < cardio.length; c++) {
+                                    if (checkedExercises[i][countMuscle][c]) {
+                                        serializer.startTag(null, "Exercise");
+                                        serializer.attribute(null, "num", String.valueOf(c));
+                                        serializer.endTag(null, "Exercise");
+                                    }
+                                }
+                                break;
+                        }
+                        serializer.endTag(null, "Muscle");
+                    }
+                    countMuscle++;
+                }
+                countMuscle = 0;
+                serializer.endTag(null, "Day");
+                /*updateBarHandler.post(new Runnable() {
+                    public void run() {
+                        barProgressDialog.incrementProgressBy(1);
+                    }
+                });*/
+            }
+
+            serializer.endTag(null, "GymRoutine");
+
+            serializer.endDocument();
+            serializer.flush();
+            fout.close();
+        } catch (Exception e) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(DaysRoutineActivity.this);
+            builder.setTitle(getResources().getString(R.string.alert_title_errorCreatingFile));
+            builder.setMessage(getResources().getString(R.string.alert_message_errorCreatingFile) +" "+ e.getMessage());
+            builder.setPositiveButton("OK", null);
+            builder.setIcon(R.drawable.ic_launcher);
+            builder.create().show();
+        }
     }
 
 }

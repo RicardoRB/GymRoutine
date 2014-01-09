@@ -2,7 +2,7 @@ package com.ricardorb.adapters;
 
 import java.io.File;
 
-import android.R;
+
 import android.content.Context;
 import android.os.Environment;
 import android.view.Gravity;
@@ -14,104 +14,109 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.ricardorb.gymroutine.R;
+
 public class ListRoutinesAdapter extends BaseAdapter {
-	private Context mContext;
-	private String[] archivos = new String[0];
+    private Context mContext;
+    private String[] archivos = new String[0];
 
-	private ImageView icon;
-	private TextView text;
-	LinearLayout ll;
+    private ImageView icon;
+    private TextView text;
+    LinearLayout ll;
 
-	File directory;
+    File directory;
 
-	public ListRoutinesAdapter(Context c) {
-		mContext = c;
-		// archivos =
-		//c.getResources().getStringArray(android.R.array.emailAddressTypes);
-		// Funciones para leer los archivos
-		boolean isSDPresent = Environment.getExternalStorageState()
-				.equals(Environment.MEDIA_MOUNTED);
-		if (isSDPresent) {
-			try {
-				directory = new File(Environment.getExternalStorageDirectory()
-						+ File.separator + "GymRoutines");
+    public ListRoutinesAdapter(Context c) {
+        mContext = c;
+        // archivos =
+        //c.getResources().getStringArray(android.R.array.emailAddressTypes);
+        // Reading files
+        boolean isSDPresent = Environment.getExternalStorageState()
+                .equals(Environment.MEDIA_MOUNTED);
+        if (isSDPresent) {
+            try {
+                directory = new File(Environment.getExternalStorageDirectory()
+                        + File.separator + "GymRoutines");
 
-				if (!directory.exists()) {
-					directory.mkdir();
-					Toast.makeText(
-							mContext,
-							"Se ha creado una carpeta nueva en "
-									+ directory.getPath(), Toast.LENGTH_SHORT)
-							.show();
-				}
+                if (!directory.exists()) {
+                    if (directory.mkdir()) {
+                        Toast.makeText(
+                                mContext,
+                                c.getResources().getString(R.string.alert_message_createFolder)
+                                        + directory.getPath(), Toast.LENGTH_SHORT)
+                                .show();
+                    }
+                }
+                //Taking all the files in directory
+                archivos = directory.list();
 
-				archivos = directory.list();
+                //Counting how many files with .gym
+                int j = 0;
+                for (String i : archivos) {
+                    if (i.endsWith(".gym")) {
+                        j++;
+                    }
+                }
+                //Taking the name of files with .gym in filter
+                String[] filter = new String[j];
+                j = 0;
+                for (String i : archivos) {
+                    if (i.endsWith(".gym")) {
+                        filter[j] = i;
+                        j++;
+                    }
+                }
+                //Cloning array
+                archivos = filter.clone();
+            } catch (Exception e) {
+                // TODO: handle exception
+                Toast.makeText(mContext, "Error: " + e.getMessage(),
+                        Toast.LENGTH_SHORT).show();
+            }
+        } else {
+            Toast.makeText(
+                    mContext,
+                    c.getResources().getString(R.string.alert_message_errorSD), Toast.LENGTH_SHORT)
+                    .show();
+        }
+    }
 
-				int j = 0;
-				for (int i = 0; i < archivos.length; i++) {
-					if (archivos[i].endsWith(".gym")) {
-						j++;
-					}
-				}
+    @Override
+    public int getCount() {
+        // TODO Auto-generated method stub
+        return archivos.length;
+    }
 
-				String[] filtro = new String[j];
-				j = 0;
-				for (int i = 0; i < archivos.length; i++) {
-					if (archivos[i].endsWith(".gym")) {
-						filtro[j] = archivos[i];
-						j++;
-					}
-				}
-				archivos = filtro.clone();
-			} catch (Exception e) {
-				// TODO: handle exception
-				Toast.makeText(mContext, "Error: " + e.getMessage(),
-						Toast.LENGTH_SHORT).show();
-			}
-		}else{
-			Toast.makeText(
-					mContext,
-					"No hay sd ", Toast.LENGTH_SHORT)
-					.show();
-		}
-	}
+    @Override
+    public Object getItem(int posi) {
+        // TODO Auto-generated method stub
+        return posi;
+    }
 
-	@Override
-	public int getCount() {
-		// TODO Auto-generated method stub
-		return archivos.length;
-	}
+    @Override
+    public long getItemId(int posi) {
+        // TODO Auto-generated method stub
+        return posi;
+    }
 
-	@Override
-	public Object getItem(int posi) {
-		// TODO Auto-generated method stub
-		return posi;
-	}
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent) {
+        // TODO Auto-generated method stub
+        ll = new LinearLayout(mContext);
+        icon = new ImageView(mContext);
+        text = new TextView(mContext);
+        ll.setOrientation(LinearLayout.HORIZONTAL);
 
-	@Override
-	public long getItemId(int posi) {
-		// TODO Auto-generated method stub
-		return posi;
-	}
+        // icon.setLayoutParams(new LinearLayout.LayoutParams(24, 24)); size
+        icon.setScaleType(ImageView.ScaleType.FIT_START); // escalar la imagen
+        icon.setImageResource(android.R.drawable.ic_menu_upload);
 
-	@Override
-	public View getView(int position, View convertView, ViewGroup parent) {
-		// TODO Auto-generated method stub
-		ll = new LinearLayout(mContext);
-		icon = new ImageView(mContext);
-		text = new TextView(mContext);
-		ll.setOrientation(LinearLayout.HORIZONTAL);
+        text.setGravity(Gravity.LEFT);
+        text.setText(archivos[position]);
+        ll.addView(icon);
+        ll.addView(text);
 
-		// icon.setLayoutParams(new LinearLayout.LayoutParams(24, 24)); tama�o
-		icon.setScaleType(ImageView.ScaleType.FIT_START); // escalar la imagen
-		icon.setImageResource(R.drawable.ic_menu_upload);
-
-		text.setGravity(Gravity.LEFT);
-		text.setText(archivos[position]);
-		ll.addView(icon);
-		ll.addView(text);
-
-		return ll;
-	}
+        return ll;
+    }
 
 }

@@ -162,6 +162,14 @@
     <!-- Alert Dialog -->
     <string name="alert_title_nameRoutine">Name Routine</string>
     <string name="alert_message_nameRoutine">You must insert a name first</string>
+    <string name="alert_title_errorOpenFile">Error Opening the File</string>
+    <string name="alert_message_errorOpenFile">There was an error opening the file: </string>
+    <string name="alert_title_errorCreatingFile">Error Creating The File</string>
+    <string name="alert_message_errorCreatingFile">There was an error creating the file:</string>
+    <string name="alert_message_errorSD">No SD</string>
+    <string name="alert_message_createFolder">A new folder was create in:</string>
+    <string name="alert_title_creatingFile">Creating File</string>
+    <string name="alert_message_creatingFileDays">Creating file by days...</string>
     <string name="title_section1">Section 1</string>
     <string name="title_section2">Section 2</string>
     <string name="title_section3">Section 3</string>
