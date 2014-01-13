@@ -108,11 +108,12 @@ public class ListRoutinesAdapter extends BaseAdapter {
         ll.setOrientation(LinearLayout.HORIZONTAL);
 
         // icon.setLayoutParams(new LinearLayout.LayoutParams(24, 24)); size
-        icon.setScaleType(ImageView.ScaleType.FIT_START); // escalar la imagen
-        icon.setImageResource(android.R.drawable.ic_menu_upload);
+        icon.setScaleType(ImageView.ScaleType.FIT_START); // image scale
+        icon.setImageResource(android.R.drawable.ic_menu_agenda);
 
         text.setGravity(Gravity.LEFT);
         text.setText(archivos[position]);
+        text.setTag(position);
         ll.addView(icon);
         ll.addView(text);
 

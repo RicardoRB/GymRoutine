@@ -1,6 +1,7 @@
 package com.ricardorb.gymroutine;
 
 import android.content.Intent;
+import android.os.Build;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
@@ -76,16 +77,21 @@ public class ChronometerActivity extends Fragment {
             case R.id.action_run_crono:
                 if (item.isChecked()) {
                     item.setChecked(false);
-                    cronoRun = false;
+                    this.cronoRun = false;
                     item.setIcon(android.R.drawable.checkbox_off_background);
                 } else {
                     item.setChecked(true);
-                    cronoRun = true;
+                    this.cronoRun = true;
                     item.setIcon(android.R.drawable.checkbox_on_background);
                 }
                 return true;
             case R.id.action_music_crono:
-                startActivity(new Intent(MediaStore.INTENT_ACTION_MUSIC_PLAYER));
+                if ( Build.VERSION.SDK_INT < Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1 )  {
+                    startActivity(new Intent(MediaStore.INTENT_ACTION_MUSIC_PLAYER));
+                }
+                else  {
+                    startActivity(new Intent(Intent.CATEGORY_APP_MUSIC));
+                }
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

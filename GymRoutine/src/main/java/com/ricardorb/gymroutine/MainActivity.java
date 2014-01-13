@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Vector;
 
 import android.content.Intent;
+import android.os.Build;
 import android.provider.MediaStore;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
@@ -16,7 +17,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.ricardorb.adapters.PagerAdapter;
-import com.ricardorb.routines.AddRoutineActivity;
 
 public class MainActivity extends ActionBarActivity implements ActionBar.TabListener {
 
@@ -64,18 +64,18 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
                 actionBar.setSelectedNavigationItem(position);
             }
         });
-
-        // For each of the sections in the app, add a tab to the action bar.
-        for (int i = 0; i < mSectionsPagerAdapter.getCount(); i++) {
-            // Create a tab with text corresponding to the page title defined by
-            // the adapter. Also specify this Activity object, which implements
-            // the TabListener interface, as the callback (listener) for when
-            // this tab is selected.
-            actionBar.addTab(
-                    actionBar.newTab()
-                            .setText("Pestaña " + i)
-                            .setTabListener(this));
-        }
+        // Create a tab with text corresponding to the page title defined by
+        // the adapter. Also specify this Activity object, which implements
+        // the TabListener interface, as the callback (listener) for when
+        // this tab is selected.
+        actionBar.addTab(
+                actionBar.newTab()
+                        .setText(getResources().getString(R.string.title_activity_chronometer))
+                        .setTabListener(this));
+        actionBar.addTab(
+                actionBar.newTab()
+                        .setText(getResources().getString(R.string.title_activity_routines))
+                        .setTabListener(this));
     }
 
 
@@ -95,7 +95,12 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         // as you specify a parent activity in AndroidManifest.xml.
         switch (item.getItemId()) {
             case R.id.action_music_routines:
-                startActivity(new Intent(MediaStore.INTENT_ACTION_MUSIC_PLAYER));
+                if ( Build.VERSION.SDK_INT < Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1 )  {
+                    startActivity(new Intent(MediaStore.INTENT_ACTION_MUSIC_PLAYER));
+                }
+                else  {
+                    startActivity(new Intent(Intent.CATEGORY_APP_MUSIC));
+                }
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

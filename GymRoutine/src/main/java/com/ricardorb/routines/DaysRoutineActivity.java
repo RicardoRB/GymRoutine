@@ -7,10 +7,8 @@ import java.util.List;
 import java.util.Vector;
 
 import android.app.AlertDialog;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Environment;
-import android.os.Handler;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
@@ -169,7 +167,7 @@ public class DaysRoutineActivity extends ActionBarActivity implements ActionBar.
             i.putExtra("nameRoutine", this.nameRoutine);
             startActivity(i);
             return true;
-        }else{
+        }else if(id == R.id.action_routineDone && !fromMusclesFragments){
             createXML();
             startActivity(new Intent(this, MainActivity.class));
         }
@@ -239,7 +237,7 @@ public class DaysRoutineActivity extends ActionBarActivity implements ActionBar.
                 int indexDayArray = (i == 0 ? 0 : (((i + 1) * numMuscles) - numMuscles));
                 for (int j = indexDayArray; j < ((i + 1) * numMuscles); j++) {
                     if (checkedMuscles[j]) {
-                        switch (j) {
+                        switch (countMuscle) {
                             case 0:
                                 String[] chest = getResources().getStringArray(R.array.array_chest_exercises);
                                 for (int c = 0; c < chest.length; c++) {
@@ -377,8 +375,8 @@ public class DaysRoutineActivity extends ActionBarActivity implements ActionBar.
                 for (int j = indexDayArray; j < ((i + 1) * numMuscles); j++) {
                     if (checkedMuscles[j]) {
                         serializer.startTag(null, "Muscle");
-                        serializer.attribute(null, "num", String.valueOf(j));
-                        switch (j) {
+                        serializer.attribute(null, "num", String.valueOf(countMuscle));
+                        switch (countMuscle) {
                             case 0:
                                 String[] chest = getResources().getStringArray(R.array.array_chest_exercises);
                                 for (int c = 0; c < chest.length; c++) {

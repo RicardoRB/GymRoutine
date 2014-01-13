@@ -19,14 +19,24 @@ public class EntryAdapter extends ArrayAdapter<Item> {
     private LayoutInflater vi;
     private Context mContext;
     private int fragmentDay;
-    private boolean checkeds[][];
+    private boolean openFile;
+    private boolean checkeds[][] = null;
 
-    public EntryAdapter(Context context, ArrayList<Item> items, boolean checkeds[][],int fragmentDay) {
+    public EntryAdapter(Context context, ArrayList<Item> items, boolean checkeds[][], int fragmentDay, boolean openFile) {
         super(context, 0, items);
         this.items = items;
         this.mContext = context;
         this.checkeds = checkeds.clone();
         this.fragmentDay = fragmentDay;
+        this.openFile = openFile;
+        vi = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+    }
+
+    public EntryAdapter(Context context, ArrayList<Item> items, boolean openFile) {
+        super(context, 0, items);
+        this.items = items;
+        this.mContext = context;
+        this.openFile = openFile;
         vi = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
@@ -48,24 +58,32 @@ public class EntryAdapter extends ArrayAdapter<Item> {
                 final TextView sectionView = (TextView) v.findViewById(R.id.list_item_section_text);
                 sectionView.setText(si.getTitle());
             } else {
-                final EntryItem ei = (EntryItem) item;
-                v = vi.inflate(R.layout.list_item_entry, null);
-                final CheckBox sub_cb = (CheckBox) v.findViewById(R.id.cb_list_item_entry_summary);
-
-                if (sub_cb != null) {
-                    sub_cb.setText(ei.title);
-                }
-                if (checkeds != null) {
-                    sub_cb.setChecked(checkeds[ei.getNumMuscle()][ei.getNumExercise()]);
-                }
-
-                sub_cb.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        ((DaysRoutineActivity) mContext).setCheckedExercises(ei.title, sub_cb.isChecked(), fragmentDay);
+                if (openFile) {
+                    final EntryItem ei = (EntryItem) item;
+                    v = vi.inflate(R.layout.list_item_see, null);
+                    final TextView title = (TextView) v.findViewById(R.id.list_item_entry_title);
+                    if (title != null) {
+                        title.setText(ei.title);
                     }
-                });
+                } else {
+                    final EntryItem ei = (EntryItem) item;
+                    v = vi.inflate(R.layout.list_item_entry, null);
+                    final CheckBox sub_cb = (CheckBox) v.findViewById(R.id.cb_list_item_entry_summary);
 
+                    if (sub_cb != null) {
+                        sub_cb.setText(ei.title);
+                    }
+                    if (checkeds != null) {
+                        sub_cb.setChecked(checkeds[ei.getNumMuscle()][ei.getNumExercise()]);
+                    }
+
+                    sub_cb.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            ((DaysRoutineActivity) mContext).setCheckedExercises(ei.title, sub_cb.isChecked(), fragmentDay);
+                        }
+                    });
+                }
 
             }
         }

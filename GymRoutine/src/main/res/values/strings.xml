@@ -177,5 +177,7 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="action_example">Example action</string>
     <string name="hello_world">Hello world!</string>
+    <string name="title_activity_read_file">ReadFileActivity</string>
+    <string name="title_activity_see_exercises">SeeExercisesActivity</string>
 
 </resources>

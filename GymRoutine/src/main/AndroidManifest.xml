@@ -7,14 +7,14 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <uses-sdk
-        android:minSdkVersion="7"
+        android:minSdkVersion="8"
         android:targetSdkVersion="19" />
 
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/Theme.AppCompat.Light.DarkActionBar">
+        android:theme="@style/Theme.AppCompat.Light.DarkActionBar" >
         <activity
             android:name="com.ricardorb.gymroutine.MainActivity"
             android:configChanges="orientation|screenSize"
@@ -28,16 +28,26 @@
         <activity
             android:name="com.ricardorb.routines.AddRoutineActivity"
             android:label="@string/title_activity_add_routine"
-            android:parentActivityName=".MainActivity">
+            android:parentActivityName="com.ricardorb.gymroutine.MainActivity" >
+
             <!-- Parent activity meta-data to support API level 7+ -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
-
         <activity
             android:name="com.ricardorb.routines.DaysRoutineActivity"
-            android:label="@string/title_activity_days_routine">
+            android:label="@string/title_activity_days_routine" >
+        </activity>
+        <activity
+            android:name="com.ricardorb.routines.ReadFileActivity"
+            android:label="@string/title_activity_read_file"
+            android:parentActivityName="com.ricardorb.gymroutine.MainActivity" >
+
+            <!-- Parent activity meta-data to support API level 7+ -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
         </activity>
     </application>
 
