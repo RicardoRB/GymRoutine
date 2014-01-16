@@ -1,7 +1,9 @@
 package com.ricardorb.gymroutine;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.Build;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
@@ -17,22 +19,25 @@ import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.ricardorb.adapters.ListRoutinesAdapter;
 import com.ricardorb.routines.AddRoutineActivity;
 import com.ricardorb.routines.ReadFileActivity;
 
+import java.io.File;
+
 public class RoutinesActivity extends Fragment {
+    ListView lv;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+        super.onCreate(savedInstanceState);
     }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        //super.onCreateOptionsMenu(menu, inflater);
         getActivity().getMenuInflater().inflate(R.menu.routines, menu);
     }
 
@@ -43,46 +48,85 @@ public class RoutinesActivity extends Fragment {
         // as you specify a parent activity in AndroidManifest.xml.
         switch (item.getItemId()) {
             case R.id.action_add_routine:
-                startActivity(new Intent(getActivity(),AddRoutineActivity.class));
+                startActivity(new Intent(getActivity(), AddRoutineActivity.class));
                 return true;
             case R.id.action_music_routines:
-                if ( Build.VERSION.SDK_INT < Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1 )  {
-                    startActivity(new Intent(MediaStore.INTENT_ACTION_MUSIC_PLAYER));
-                }
-                else  {
-                    startActivity(new Intent(Intent.CATEGORY_APP_MUSIC));
-                }
+                startActivity(new Intent(MediaStore.INTENT_ACTION_MUSIC_PLAYER));
                 return true;
+            case R.id.action_refresh_routines:
+                ListRoutinesAdapter adapter = new ListRoutinesAdapter(getActivity());
+                lv.setAdapter(adapter);
+                Toast.makeText(getActivity(), getResources().getString(R.string.toast_refresh_files), Toast.LENGTH_LONG).show();
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
 
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                Bundle savedInstanceState) {
-            final ListView lv = (ListView) inflater.inflate(R.layout.fragment_routines, container, false);
-            ListRoutinesAdapter adapter = new ListRoutinesAdapter(getActivity().getBaseContext().getApplicationContext());
-            lv.setAdapter(adapter);
-            lv.setOnItemClickListener(new OnItemClickListener() {
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        lv = (ListView) inflater.inflate(R.layout.fragment_routines, container, false);
+        ListRoutinesAdapter adapter = new ListRoutinesAdapter(getActivity());
+        lv.setAdapter(adapter);
+        lv.setOnItemClickListener(new OnItemClickListener() {
 
-                @Override
-                public void onItemClick(AdapterView parent, View view, int position, long id) {
-                    // TODO Auto-generated method stub
-                    Intent i = new Intent(getActivity(), ReadFileActivity.class);
-                    i.putExtra("nameFile",((TextView)((LinearLayout) view).findViewWithTag(position)).getText().toString());
-                    startActivity(i);
-                }
-            });
-            lv.setOnItemLongClickListener(new OnItemLongClickListener() {
+            @Override
+            public void onItemClick(AdapterView parent, View view, int position, long id) {
+                // TODO Auto-generated method stub
+                final String nameFile = ((TextView) ((LinearLayout) view).findViewWithTag(position)).getText().toString();
+                Intent i = new Intent(getActivity(), ReadFileActivity.class);
+                i.putExtra("nameFile", nameFile);
+                startActivity(i);
+            }
+        });
+        //I create a AlertDialog with options when the user do a long click in the item
+        lv.setOnItemLongClickListener(new OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView parent, final View v, final int position, long id) {
+                // TODO Auto-generated method stub
+                AlertDialog.Builder options =
+                        new AlertDialog.Builder(getActivity());
+                String[] items = getResources().getStringArray(R.array.array_options_files);
+                options.setTitle(getResources().getString(R.string.alert_title_options_files)).setItems(items, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int item) {
+                        final String nameFile = ((TextView) ((LinearLayout) v).findViewWithTag(position)).getText().toString();
+                        if (item <= 0) {
+                            Intent i = new Intent(getActivity(), ReadFileActivity.class);
+                            i.putExtra("nameFile", nameFile);
+                            startActivity(i);
+                        } else {
+                            //The user choose delete then I put another alert saying if he is sure
+                            AlertDialog.Builder delete =
+                                    new AlertDialog.Builder(getActivity());
 
-                @Override
-                public boolean onItemLongClick(AdapterView parent, View v, int position, long id) {
-                    // TODO Auto-generated method stub
-
-                    return false;
-                }
-            });
-            return lv;
-        }
+                            delete.setMessage(getResources().getString(R.string.alert_message_delete_file))
+                                    .setTitle(nameFile)
+                                    .setPositiveButton(getResources().getString(R.string.alert_buttons_yes), new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int id) {
+                                            File deleteFile = new File(Environment.getExternalStorageDirectory()
+                                                    + File.separator + "GymRoutines" + File.separator + nameFile);
+                                            deleteFile.delete();
+                                            ListRoutinesAdapter adapter = new ListRoutinesAdapter(getActivity());
+                                            lv.setAdapter(adapter);
+                                            Toast.makeText(getActivity(), nameFile + getResources().getString(R.string.toast_delete_file), Toast.LENGTH_LONG).show();
+                                            dialog.cancel();
+                                        }
+                                    })
+                                    .setNegativeButton(getResources().getString(R.string.alert_buttons_no), new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int id) {
+                                            dialog.cancel();
+                                        }
+                                    });
+                            delete.create();
+                            delete.show();
+                        }
+                    }
+                });
+                options.create();
+                options.show();
+                return false;
+            }
+        });
+        return lv;
+    }
 }

@@ -11,10 +11,4 @@
         android:orderInCategory="100"
         android:showAsAction="never"
         android:title="@string/action_run_crono"/>
-    <item
-        android:id="@+id/action_music_crono"
-        android:icon="@android:drawable/ic_media_play"
-        android:orderInCategory="100"
-        android:showAsAction="never"
-        android:title="@string/action_music"/>
 </menu>

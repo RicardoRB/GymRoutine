@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Vector;
 
 import android.content.Intent;
-import android.os.Build;
 import android.provider.MediaStore;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
@@ -95,12 +94,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         // as you specify a parent activity in AndroidManifest.xml.
         switch (item.getItemId()) {
             case R.id.action_music_routines:
-                if ( Build.VERSION.SDK_INT < Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1 )  {
-                    startActivity(new Intent(MediaStore.INTENT_ACTION_MUSIC_PLAYER));
-                }
-                else  {
-                    startActivity(new Intent(Intent.CATEGORY_APP_MUSIC));
-                }
+                startActivity(new Intent(MediaStore.INTENT_ACTION_MUSIC_PLAYER));
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

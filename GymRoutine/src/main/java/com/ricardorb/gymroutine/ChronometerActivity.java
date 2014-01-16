@@ -1,11 +1,12 @@
 package com.ricardorb.gymroutine;
 
 import android.content.Intent;
-import android.os.Build;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,8 +26,13 @@ public class ChronometerActivity extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        setHasOptionsMenu(true);
         super.onCreate(savedInstanceState);
+    }
 
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        getActivity().getMenuInflater().inflate(R.menu.chronometer, menu);
     }
 
     @Override
@@ -85,13 +91,8 @@ public class ChronometerActivity extends Fragment {
                     item.setIcon(android.R.drawable.checkbox_on_background);
                 }
                 return true;
-            case R.id.action_music_crono:
-                if ( Build.VERSION.SDK_INT < Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1 )  {
-                    startActivity(new Intent(MediaStore.INTENT_ACTION_MUSIC_PLAYER));
-                }
-                else  {
-                    startActivity(new Intent(Intent.CATEGORY_APP_MUSIC));
-                }
+            case R.id.action_music_routines:
+                startActivity(new Intent(MediaStore.INTENT_ACTION_MUSIC_PLAYER));
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
