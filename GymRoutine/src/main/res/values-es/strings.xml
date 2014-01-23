@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Gym Routine</string>
+    <!-- Activities titles -->
+    <string name="title_activity_chronometer">Cronómetro</string>
+    <string name="title_activity_routines">Rutinas</string>
+    <string name="title_activity_add_routine">Añadir Rutina</string>
+    <string name="title_activity_days_routine">Diario de Rutinas</string>
+    <string name="title_activity_choose_exercises">Elegir ejercicios activity</string>
+    <string name="title_activity_read_file">Leer archivo activity</string>
+    <string name="title_activity_see_exercises">Ver ejercicios activity</string>
+    <!-- Submenus -->
+    <string name="action_settings">Opciones</string>
+    <string name="action_music">Música</string>
+    <string name="action_add_routine">Añadir nueva rutina</string>
+    <string name="action_run_crono">Mantener el cronómetro corriendo</string>
+    <string name="action_routineDone">Hecho</string>
+    <string name="action_refresh_routines">Refrescar rutinas</string>
+    <!-- Buttons -->
+    <string name="btn_reset">Reiniciar</string>
+    <string name="btn_next">Siguiente</string>
+    <!-- Tags -->
+    <string name="txt_routineName">Nombre de la Rutina</string>
+    <string name="txt_daysWeek">Días de la Rutina</string>
+    <string name="txt_sets">Series</string>
+    <string name="txt_repetitions">Repeticiones</string>
+    <string name="txt_time">Tiempo</string>
+    <!-- Arrays -->
+    <string-array name="array_muscles">
+        <item>Pecho</item>
+        <item>Espalda</item>
+        <item>Biceps</item>
+        <item>Triceps</item>
+        <item>Hombros</item>
+        <item>Piernas</item>
+        <item>Antebrazos</item>
+        <item>Abdominales</item>
+        <item>Cardio</item>
+    </string-array>
+    <string-array name="array_chest_exercises">
+        <item>Press Banca</item>
+        <item>Press Banca Inclinado</item>
+        <item>Press Banca con Mancuernas</item>
+        <item>Press Banca Inclinado con Mancuernas</item>
+        <item>Pull Over con Mancuerna</item>
+        <item>Aperturas en Contractor de Pecho</item>
+        <item>Flexiones</item>
+        <item>Fondo en Paralelas</item>
+        <item>Aperturas en Banco Plano</item>
+        <item>Press Banca Declinado</item>
+    </string-array>
+    <string-array name="array_back_exercises">
+        <item>Dominadas</item>
+        <item>Remo con Barra T</item>
+        <item>Remo Horizontal con Barra</item>
+        <item>Peso Muerto</item>
+        <item>Polea al Pecho con Agarre Cerrado</item>
+        <item>Polea al Pecho</item>
+        <item>Remo Horizontal con Mancuernas</item>
+        <item>Remo en Polea Baja</item>
+        <item>Remo Horizontal con Barra y Agarre Ivertido</item>
+        <item>Pull Over con Polea Alta</item>
+    </string-array>
+    <string-array name="array_biceps_exercises">
+        <item>Curl con Barra</item>
+        <item>Curl con Mancuernas</item>
+        <item>Curl Martillo con Mancuernas</item>
+        <item>Curl con Mancuernas en Banco Inclinado</item>
+        <item>Curl Predicador</item>
+        <item>Curl con Mancuernas Concentrado</item>
+        <item>Curl en Polea Baja</item>
+        <item>Curl en Pronación</item>
+        <item>Curl en Supinación</item>
+    </string-array>
+    <string-array name="array_triceps_exercises">
+        <item>Press Francés con Mancuernas</item>
+        <item>Press Banca con Agarre Cerrado</item>
+        <item>Extensión de Codo con Mancuerna</item>
+        <item>Extensión en Polea Alta</item>
+        <item>Patada de Burro con Mancuerna</item>
+        <item>Fondo en Banco</item>
+    </string-array>
+    <string-array name="array_shoulders_exercises">
+        <item>Press Militar en Barra</item>
+        <item>Press Militar con Mancuernas</item>
+        <item>Elevaciones Frontales</item>
+        <item>Elevaciones Laterales</item>
+        <item>Press Arnold</item>
+        <item>Elevaciones Laterales Pájaro</item>
+        <item>Encogimiento de Hombros</item>
+        <item>Barra al Mentón</item>
+        <item>Press Hombros en Máquina</item>
+        <item>Trasnuca con Barra</item>
+    </string-array>
+    <string-array name="array_legs_exercises">
+        <item>Zancadas</item>
+        <item>Elevación de Talones</item>
+        <item>Sentadillas</item>
+        <item>Sentadillas Frontales</item>
+        <item>Subida a Banco con Mancuernas</item>
+        <item>Extensión de Piernas en Máquina</item>
+        <item>Curl de Piernas en Máquina</item>
+        <item>Prensa</item>
+        <item>Prensa Inclinada</item>
+        <item>Buenos Días</item>
+        <item>Aductores en Máquina</item>
+        <item>Abducción Lateral de Cadera</item>
+        <item>Elevación de Talones Sentado</item>
+    </string-array>
+    <string-array name="array_forearms_exercises">
+        <item>Curl con Agarre en Supinación</item>
+        <item>Curl con Agarre en Pronación</item>
+        <item>Curl con Mancuerna y Agarre en Supinación</item>
+        <item>Curl con Mancuerna y Agarre en Pronación</item>
+        <item>Rodillo de la Muñeca con Disco</item>
+    </string-array>
+    <string-array name="array_abdominals_exercises">
+        <item>Levantamiento de Piernas</item>
+        <item>Peso con Giro</item>
+        <item>Flexión Laterla con Mancuerna</item>
+        <item>Rodillas al Pecho</item>
+        <item>Elevaciones Alternas</item>
+        <item>Crunch con Pelota</item>
+        <item>Isométrico</item>
+        <item>Polea Alta con Cable al Cuello</item>
+        <item>Toque de los Tobillos con las Piernas en Vertical</item>
+        <item>Giros Rusos</item>
+    </string-array>
+    <string-array name="array_cardio_exercises">
+        <item>Escaleras</item>
+        <item>Correr</item>
+        <item>Bicicleta</item>
+        <item>Elliptical</item>
+        <item>Máquina de Remo</item>
+        <item>Andar</item>
+    </string-array>
+    <string-array name="array_week">
+        <item>Lunes</item>
+        <item>Martes</item>
+        <item>Miércoles</item>
+        <item>Jueves</item>
+        <item>Viernes</item>
+        <item>Sábado</item>
+        <item>Domingo</item>
+    </string-array>
+    <string-array name="array_days">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+    </string-array>
+    <string-array name="array_options_files">
+        <item>Abrir</item>
+        <item>Eliminar</item>
+    </string-array>
+    <!-- Context Menu -->
+    <string name="context_open">Abrir</string>
+    <string name="context_modify">Modificar</string>
+    <string name="context_delete">Eliminar</string>
+    <!-- Tab -->
+    <string name="tab_day">Día</string>
+    <!-- Alert Dialog -->
+    <string name="alert_title_nameRoutine">Nombre de Rutina</string>
+    <string name="alert_message_nameRoutine">Debes insertar un nombre primero</string>
+    <string name="alert_title_errorOpenFile">Error Abriendo el Archivo</string>
+    <string name="alert_message_errorOpenFile">Hubo un error abriendo el archivo: </string>
+    <string name="alert_title_errorCreatingFile">Error Creando el Archivo</string>
+    <string name="alert_message_errorCreatingFile">Hubo un error creando el archivo:</string>
+    <string name="alert_message_errorSD">No hay SD</string>
+    <string name="alert_message_createFolder">Una nueva carpeta fue creado en:</string>
+    <string name="alert_title_creatingFile">Creando Archivo</string>
+    <string name="alert_message_creatingFileDays">Creando archivo por días...</string>
+    <string name="alert_title_options_files">Opciones</string>
+    <string name="alert_message_delete_file">¿Quieres eliminar éste archivo?</string>
+    <string name="alert_buttons_yes">Sí</string>
+    <string name="alert_buttons_no">No</string>
+    <!-- Toast -->
+    <string name="toast_delete_file">fue eliminado.</string>
+    <string name="toast_refresh_files">La lista de archivo de rutinas fue refrescado</string>
+
+</resources>

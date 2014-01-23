@@ -7,9 +7,9 @@
     <string name="title_activity_routines">Routines</string>
     <string name="title_activity_add_routine">Add routine</string>
     <string name="title_activity_days_routine">Days Routine</string>
-    <string name="title_activity_choose_exercises">ChooseExercisesActivity</string>
-    <string name="title_activity_read_file">ReadFileActivity</string>
-    <string name="title_activity_see_exercises">SeeExercisesActivity</string>
+    <string name="title_activity_choose_exercises">Choose Exercises</string>
+    <string name="title_activity_read_file">Read File</string>
+    <string name="title_activity_see_exercises">See Exercises</string>
     <!-- Submenus -->
     <string name="action_settings">Settings</string>
     <string name="action_music">Music</string>
@@ -22,7 +22,7 @@
     <string name="btn_next">Next</string>
     <!-- Tags -->
     <string name="txt_routineName">Routine Name</string>
-    <string name="txt_daysWeek">Days for week</string>
+    <string name="txt_daysWeek">Days of Routine</string>
     <string name="txt_sets">Sets</string>
     <string name="txt_repetitions">Repetitions</string>
     <string name="txt_time">Time</string>
@@ -55,7 +55,7 @@
         <item>T-Bar rows</item>
         <item>Bent Over Barbell Rows</item>
         <item>Deadlifts</item>
-        <item>Upright Rows</item>
+        <item>Lat Pulldowns Narrow Grip</item>
         <item>Lat Pulldowns</item>
         <item>Dumbbell Rows</item>
         <item>Seated Cable Rows</item>
@@ -91,7 +91,7 @@
         <item>Shrugs</item>
         <item>Upright row</item>
         <item>Shoulder machine press</item>
-        <item>Pull Ups</item>
+        <item>Press Behind Neck</item>
     </string-array>
     <string-array name="array_legs_exercises">
         <item>Stationary Lunge</item>
@@ -103,7 +103,7 @@
         <item>Seated Leg Curl</item>
         <item>Leg Press</item>
         <item>Incline Leg Press</item>
-        <item>Squat</item>
+        <item>Good Morning</item>
         <item>Seated Hip Adduction</item>
         <item>Standing Hip Adduction</item>
         <item>Calf Raise</item>
@@ -113,7 +113,7 @@
         <item>Barbell Wrist Curls</item>
         <item>Dumbbell Wrist Curls</item>
         <item>Barbell Reverse Wrist Curls</item>
-        <item>Dumbbell Reverse Wrist Curls</item>
+        <item>Bent Arm Disc Roller</item>
     </string-array>
     <string-array name="array_abdominals_exercises">
         <item>Leg Raise</item>
@@ -129,14 +129,11 @@
     </string-array>
     <string-array name="array_cardio_exercises">
         <item>Stair Climbing</item>
-        <item>Treadmill</item>
+        <item>Running</item>
         <item>Exercise Bike</item>
         <item>Elliptical Trainer</item>
         <item>Rowing Machines</item>
         <item>Walking</item>
-        <item>Running and Jogging</item>
-        <item>Cycling</item>
-        <item>Swimming</item>
     </string-array>
     <string-array name="array_week">
         <item>Monday</item>
