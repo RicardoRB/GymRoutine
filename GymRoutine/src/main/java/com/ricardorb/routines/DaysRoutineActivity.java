@@ -85,7 +85,19 @@ public class DaysRoutineActivity extends ActionBarActivity implements ActionBar.
                 this.checkedExercises = exercises.clone();
 
             } else {
-                checkedExercises = new boolean[numDays][getResources().getStringArray(R.array.array_muscles).length][getResources().getStringArray(R.array.array_legs_exercises).length];
+                int maxNumExercises = 0;
+                int maxExercises[] = {getResources().getStringArray(R.array.array_legs_exercises).length, getResources().getStringArray(R.array.array_abdominals_exercises).length
+                        , getResources().getStringArray(R.array.array_back_exercises).length, getResources().getStringArray(R.array.array_biceps_exercises).length
+                        , getResources().getStringArray(R.array.array_biceps_exercises).length, getResources().getStringArray(R.array.array_cardio_exercises).length
+                        , getResources().getStringArray(R.array.array_chest_exercises).length, getResources().getStringArray(R.array.array_triceps_exercises).length
+                        , getResources().getStringArray(R.array.array_forearms_exercises).length, getResources().getStringArray(R.array.array_shoulders_exercises).length};
+                for (int max : maxExercises) {
+                    if (max > maxNumExercises) {
+                        maxNumExercises = max;
+                    }
+                }
+
+                checkedExercises = new boolean[numDays][getResources().getStringArray(R.array.array_muscles).length][maxNumExercises];
             }
 
             for (int i = 0; i < numDays; i++) {
@@ -142,7 +154,7 @@ public class DaysRoutineActivity extends ActionBarActivity implements ActionBar.
             i.putExtra("nameRoutine", this.nameRoutine);
             return i;
         } else {
-            return new Intent(this, MainActivity.class);
+            return new Intent(this, AddRoutineActivity.class);
         }
     }
 
@@ -167,7 +179,7 @@ public class DaysRoutineActivity extends ActionBarActivity implements ActionBar.
             i.putExtra("nameRoutine", this.nameRoutine);
             startActivity(i);
             return true;
-        }else if(id == R.id.action_routineDone && !fromMusclesFragments){
+        } else if (id == R.id.action_routineDone && !fromMusclesFragments) {
             createXML();
             startActivity(new Intent(this, MainActivity.class));
         }
@@ -348,7 +360,7 @@ public class DaysRoutineActivity extends ActionBarActivity implements ActionBar.
         } catch (FileNotFoundException e) {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setTitle(getResources().getString(R.string.alert_title_errorCreatingFile));
-            builder.setMessage(getResources().getString(R.string.alert_message_errorCreatingFile) +" "+ e.getMessage());
+            builder.setMessage(getResources().getString(R.string.alert_message_errorCreatingFile) + " " + e.getMessage());
             builder.setPositiveButton("OK", null);
             builder.setIcon(R.drawable.ic_launcher);
             builder.create().show();
@@ -490,7 +502,7 @@ public class DaysRoutineActivity extends ActionBarActivity implements ActionBar.
         } catch (Exception e) {
             AlertDialog.Builder builder = new AlertDialog.Builder(DaysRoutineActivity.this);
             builder.setTitle(getResources().getString(R.string.alert_title_errorCreatingFile));
-            builder.setMessage(getResources().getString(R.string.alert_message_errorCreatingFile) +" "+ e.getMessage());
+            builder.setMessage(getResources().getString(R.string.alert_message_errorCreatingFile) + " " + e.getMessage());
             builder.setPositiveButton("OK", null);
             builder.setIcon(R.drawable.ic_launcher);
             builder.create().show();

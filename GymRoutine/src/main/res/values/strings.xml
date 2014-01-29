@@ -38,7 +38,7 @@
         <item>Abdominals</item>
         <item>Cardio</item>
     </string-array>
-    <string-array name="array_chest_exercises">
+    <!--<string-array name="array_chest_exercises">
         <item>Barbell Bench Press</item>
         <item>Incline Barbell Bench Press</item>
         <item>Dumbbell Bench Press</item>
@@ -126,14 +126,244 @@
         <item>Kneeling Cable Crunch</item>
         <item>Jackknife Sit-up / Crunch</item>
         <item>Russian Twist</item>
+    </string-array> -->
+    <string-array name="array_chest_exercises">
+        <item>Flexiones</item>
+        <item>Flexiones con Pies Elevados</item>
+        <item>Flexiones a Manos Juntas</item>
+        <item>Press Banca con Barra</item>
+        <item>Press Banca con Mancuernas</item>
+        <item>Press Banca Inclinado con Barra</item>
+        <item>Press Banca Inclinado con Mancuernas</item>
+        <item>Press Banca Declinado con Barra</item>
+        <item>Press Banca Declinado con Mancuernas</item>
+        <item>Aperturas con Mancuernas</item>
+        <item>Aperturas en Máquina</item>
+        <item>Aperturas con Mancuernas en Banco Inclinado</item>
+        <item>Aperturas con Mancuernas en Banco Declinado</item>
+        <item>Pullover con Barra</item>
+        <item>Pullover con Mancuerna</item>
+        <item>Cruces en Polea</item>
+    </string-array>
+    <string-array name="array_back_exercises">
+        <item>Dominadas</item>
+        <item>Jalones Agarre Cerrado</item>
+        <item>Jalones Agarre Ancho</item>
+        <item>Jalones Agarre V</item>
+        <item>Jalones Frontales</item>
+        <item>Jalones Tras nuca</item>
+        <item>Jalones Frontales Brazos Rectos</item>
+        <item>Remo Con Barra</item>
+        <item>Remo Con Barra en Banco Inclinado</item>
+        <item>Remo en Barra T</item>
+        <item>Remo con Mancuernas Palmas Enfrentadas</item>
+        <item>Remo con Mancuerna a Una Mano</item>
+        <item>Remo en Polea Sentado</item>
+        <item>Hiperextensiones de Espalda</item>
+        <item>Buenos Días con Barra de Pie</item>
+        <item>Peso Muerto Convencional</item>
+        <item>Superman</item>
+    </string-array>
+    <string-array name="array_biceps_exercises">
+        <item>Curl con Barra</item>
+        <item>Curl con Barra Agarre Invertido</item>
+        <item>Curl con Barra Z</item>
+        <item>Curl con Barra Z Agarre Cerrado</item>
+        <item>Curl con Barra Z Predicador</item>
+        <item>Curl con Barra Concentrado</item>
+        <item>Curl con Barra Tumbado sobre Banco Inclinado</item>
+        <item>Curl Invertido con Disco</item>
+        <item>Curl con Mancuernas Alterno</item>
+        <item>Curl con Mancuernas a Dos Manos</item>
+        <item>Curl con Mancuernas Supinado</item>
+        <item>Curl con Mancuernas Agarre Martillo Alterno</item>
+        <item>Curl con Mancuernas Agarre Martillo a Dos Manos</item>
+        <item>Curl con Mancuernas Agarre Martillo Cruzado</item>
+        <item>Curl Zottman con Mancuernas</item>
+        <item>Curl de Concentración</item>
+        <item>Curl con Mancuernas Alterno en Banco Inclinado</item>
+        <item>Curl con Mancuernas a Dos Manos en Banco Inclinado</item>
+        <item>Curl con Mancuernas Tumbado en Banco</item>
+        <item>Curl con Mancuernas Agarre Martillo</item>
+        <item>Curl con Mancuerna a Una Mano</item>
+        <item>Curl Polea de Pie</item>
+        <item>Curl Polea a Dos Manos</item>
+    </string-array>
+    <string-array name="array_triceps_exercises">
+        <item>Fondos</item>
+        <item>Fondos Entre Bancos</item>
+        <item>Press de Banca Agarre Cerrado</item>
+        <item>Press de Banca Agarre Cerrado e Inverso</item>
+        <item>Press Francés</item>
+        <item>Press de Tríceps Tumbado</item>
+        <item>Extensiones en Polea a un Brazo</item>
+        <item>Extensiones en Polea sobre la Cabeza con Cuerda</item>
+        <item>Extensiones Declinadas con Barra Z</item>
+        <item>Extensiones Declinadas con Barra Z agarre cerrado</item>
+        <item>Extensiones en Banco Inclinado con Barra Z</item>
+        <item>Extensiones de Concentración en Polea Arrodillado</item>
+        <item>Extensiones en Polea Arrodillado</item>
+        <item>Extensiones con Mancuernas Tumbado</item>
+        <item>Extensiones con Mancuerna a Una Mano Tumbado y Agarre Prono</item>
+        <item>Extensiones con Mancuerna a Una Mano Tumbado y Agarre Supino</item>
+        <item>Extensiones con Barra Sentado por Encima de la Cabeza</item>
+        <item>Extensiones con Mancuerna Sentado por Encima de la Cabeza</item>
+        <item>Extensiones con Mancuerna a Una Mano en Banco</item>
+        <item>Extensiones con Mancuernas a Dos Manos de Pie</item>
+        <item>Extensiones con Mancuerna a Un Brazo</item>
+        <item>Jalones con Barra Recta</item>
+        <item>Jalones con Cuerda</item>
+        <item>Jalones con Barra V</item>
+    </string-array>
+    <string-array name="array_shoulders_exercises">
+        <item>Elevaciones Frontales en Banco Inclinado</item>
+        <item>Elevaciones Frontales con Barra</item>
+        <item>Elevaciones Frontales con Disco</item>
+        <item>Elevaciones Frontales con Mancuernas</item>
+        <item>Elevaciones Frontales con Mancuernas por Encima de la Cabeza</item>
+        <item>Elevaciones Frontales con Mancuerna Alterno</item>
+        <item>Elevaciones Frontales en Polea a Una Mano</item>
+        <item>Press Cubano</item>
+        <item>Press Cubano con Barra</item>
+        <item>Press de Hombros en Multipower</item>
+        <item>Elevaciones laterales</item>
+        <item>Elevaciones laterales a Una Mano en Banco Inclinado</item>
+        <item>Elevaciones laterales Sentado</item>
+        <item>Elevaciones a Una Mano en Polea</item>
+        <item>Press Arnold</item>
+        <item>Press con Empujón</item>
+        <item>Press de Hombro con Mancuernas Sentado</item>
+        <item>Press de Hombros en Máquina</item>
+        <item>Press de Hombros en Banda Elástica</item>
+        <item>Press Militar con Barra Sentado</item>
+        <item>Press Militar Estilo Rocky Sentado</item>
+        <item>Press Alterno con Mancuernas</item>
+        <item>Remo al Mentón con Mancuernas Agarre Abierto</item>
+        <item>Elevación Posterior Tumbado a Una Mano</item>
+        <item>Elevaciones Posteriores Tumbado</item>
+        <item>Elevación Posterior a Una Mano en Polea</item>
+        <item>Pájaros en Banco Inclinado</item>
+        <item>Pájaros en Polea Sentado</item>
+        <item>Press Tras Nuca de pie con Barra</item>
+        <item>Rotaciones Externas en Banco Inclinado</item>
+        <item>Encogimientos con Barra Agarre Estrecho</item>
+        <item>Encogimientos Tras Nuca con Barra</item>
+        <item>Encogimientos con Mancuernas</item>
+        <item>Remo al Mentón con Barra</item>
+        <item>Remo al Mentón con Mancuernas Agarre Abierto</item>
+        <item>Remo al Mentón con Mancuernas Agarre Cerrado</item>
+        <item>Remo al Mentón en Polea</item>
+        <item>Remo al Mentón en Polea Inclinado</item>
+    </string-array>
+    <string-array name="array_legs_exercises">
+        <item>Abductores en Polea</item>
+        <item>Step-up con Barra</item>
+        <item>Step-up con Mancuernas</item>
+        <item>Sentadilla con Barra</item>
+        <item>Sentadilla con Barra con Piernas Abiertas</item>
+        <item>Sentadilla Frontal con Barra</item>
+        <item>Sentadilla con Barra por Encima de la Cabeza</item>
+        <item>Sentadilla a una Pierna con Barra</item>
+        <item>Sentadilla Zecher</item>
+        <item>Sentadilla Frank</item>
+        <item>Sentadilla Jefferson</item>
+        <item>Sentadilla Hack</item>
+        <item>Sentadilla Hack con Barra</item>
+        <item>Sentadilla con Mancuerna</item>
+        <item>Sentadilla con Mancuernas</item>
+        <item>Sentadilla con Peso</item>
+        <item>Cruz de Hierro</item>
+        <item>Zancadas con Barra</item>
+        <item>Zancadas Laterales con Barra</item>
+        <item>Zancadas Inversas con Mancuernas</item>
+        <item>Zancadas con Mancuernas</item>
+        <item>Extensiones en Máquina</item>
+        <item>Peso Muerto</item>
+        <item>Power Cleans</item>
+        <item>Prensa Horizontal</item>
+        <item>Extensiones de Glúteos en Polea</item>
+        <item>Femoral en Máquina Sentado</item>
+        <item>Femoral en Máquina Tumbado</item>
+        <item>Patadas para Glúteos</item>
+        <item>Peso Muerto Rumano</item>
+        <item>Peso Muerto con Barra a Un Brazo</item>
+        <item>Peso Muerto Sumo</item>
+        <item>Prensa Inclinada</item>
+        <item>Puente en el Suelo para Glúteos</item>
+        <item>Puente en el Suelo para Glúteos con Barra</item>
+        <item>Salto de Rodillas con Barra</item>
+        <item>Abductores</item>
+        <item>Aductores</item>
+        <item>Buenos días con Barra</item>
+        <item>Tirón con Polea</item>
+        <item>Escalador de Montaña</item>
+        <item>Elevación de Gemelo en Máquina Sentado</item>
+        <item>Elevación de Gemelo en Máquina de Pie</item>
+        <item>Elevación de Gemelos de Pie con Mancuernas</item>
+        <item>Elevación de Gemelos con Barra Sentado</item>
+        <item>Gemelo en Prensa</item>
+    </string-array>
+    <string-array name="array_forearms_exercises">
+        <item>Curl de Muñeca con Mancuerna Sentado Palmas Abajo</item>
+        <item>Curl de Muñeca con Mancuerna Sentado Palmas Arriba</item>
+        <item>Rotación de Muñeca Tumbado con Agarre Prono</item>
+        <item>Rotación de Muñeca Tumbado con Agarre Supinación</item>
+        <item>Curl invertido con Barra</item>
+        <item>Curl de Muñecas con Barra Sentado Palmas Arriba</item>
+        <item>Curl de Muñecas con Barra Sentado Palmas Abajo</item>
+        <item>Curl de Muñeca con Barra por Detrás de la Espalda</item>
+        <item>Curl de Muñecas en Polea Baja Sentado</item>
+        <item>Rodillos de Muñeca</item>
+    </string-array>
+    <string-array name="array_abdominals_exercises">
+        <item>Elevaciones de Cadera con Rodillas Dobladas</item>
+        <item>Elevaciones de Piernas Colgado</item>
+        <item>Elevaciones de Piernas</item>
+        <item>Elevaciones de Piernas en Paralelas</item>
+        <item>Elevaciones de Rodillas a la Barbilla Colgado</item>
+        <item>Encogimientos en banco Declinado</item>
+        <item>Encogimientos en V</item>
+        <item>Encogimientos Invertidos en banco Declinado</item>
+        <item>Encogimientos Invertidos Tumbado</item>
+        <item>Pull-in con Balón de Ejercicio</item>
+        <item>Tijeras de Piernas</item>
+        <item>Elevaciones de Glúteos para Abdomen</item>
+        <item>Encogimientos Abdominales Dedos a Pies</item>
+        <item>Encogimientos Abdominales con Lumbar en el Suelo</item>
+        <item>Encogimientos con Manos por Encima de la Cabeza</item>
+        <item>Encogimientos Tipo Rana</item>
+        <item>Encogimientos con Piernas en Balón de Ejercicio</item>
+        <item>Encogimientos en Balón de Ejercicio</item>
+        <item>Encogimientos en Máquina</item>
+        <item>Encogimientos en Polea</item>
+        <item>Encogimientos en Polea Sentado</item>
+        <item>Rodar con la Barra</item>
+        <item>Encogimientos Lumbares</item>
+        <item>Bicicleta para Oblicuos</item>
+        <item>Elevaciones de Pierna para Oblicuos Tumbado</item>
+        <item>Encogimiento Lateral con Barra de Pie</item>
+        <item>Encogimiento Lateral con Mancuerna de Pie</item>
+        <item>Encogimientos con Codo a Rodilla Contraria</item>
+        <item>Encogimientos Laterales Dedos a los Tobillos</item>
+        <item>Encogimientos para Oblicuos en Banco Declinado</item>
+        <item>Encogimientos para Oblicuos Tumbado de Lado</item>
+        <item>Giros con Barra para Oblicuos Sentado</item>
+        <item>Giros con Disco para Oblicuos</item>
     </string-array>
     <string-array name="array_cardio_exercises">
-        <item>Stair Climbing</item>
+        <item>Aerobics</item>
+        <item>Cycling</item>
         <item>Running</item>
-        <item>Exercise Bike</item>
-        <item>Elliptical Trainer</item>
-        <item>Rowing Machines</item>
+        <item>Pilates</item>
+        <item>Recumbent Biking</item>
+        <item>Rowing Machine</item>
+        <item>Spinning</item>
+        <item>Stepper</item>
+        <item>Swimming</item>
+        <item>Treadmill</item>
         <item>Walking</item>
+        <item>Yoga</item>
+        <item>Elliptical Trainer</item>
     </string-array>
     <string-array name="array_week">
         <item>Monday</item>

@@ -1,24 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-  
-  <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" 
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:minHeight="?android:attr/listPreferredItemHeight"
     android:gravity="center_vertical"
     android:paddingRight="?android:attr/scrollbarSize"
     android:baselineAligned="false">
-    
-    <!--<ImageView
-        android:id="@+id/list_item_entry_drawable"
-        android:layout_width="wrap_content"
-        android:layout_height="fill_parent"
-        android:src="@android:drawable/ic_menu_preferences"
-        android:paddingLeft="9dp"/>-->
+
     <CheckBox
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:id="@+id/cb_list_item_entry_summary"
-        android:checked="false"/>
-    
+        android:checked="false" />
+
 </LinearLayout>

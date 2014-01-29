@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.ricardorb.gymroutine"
     android:versionCode="1"
-    android:versionName="1.0" >
+    android:versionName="1.0">
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
@@ -14,11 +14,12 @@
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/Theme.AppCompat.Light.DarkActionBar" >
+        android:theme="@style/Theme.AppCompat.Light.DarkActionBar">
         <activity
             android:name="com.ricardorb.gymroutine.MainActivity"
             android:configChanges="orientation|screenSize"
-            android:label="@string/app_name" >
+            android:launchMode="singleTask"
+            android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -28,7 +29,7 @@
         <activity
             android:name="com.ricardorb.routines.AddRoutineActivity"
             android:label="@string/title_activity_add_routine"
-            android:parentActivityName="com.ricardorb.gymroutine.MainActivity" >
+            android:parentActivityName="com.ricardorb.gymroutine.MainActivity">
 
             <!-- Parent activity meta-data to support API level 7+ -->
             <meta-data
@@ -37,12 +38,11 @@
         </activity>
         <activity
             android:name="com.ricardorb.routines.DaysRoutineActivity"
-            android:label="@string/title_activity_days_routine" >
-        </activity>
+            android:label="@string/title_activity_days_routine"/>
         <activity
             android:name="com.ricardorb.routines.ReadFileActivity"
             android:label="@string/title_activity_read_file"
-            android:parentActivityName="com.ricardorb.gymroutine.MainActivity" >
+            android:parentActivityName="com.ricardorb.gymroutine.MainActivity">
 
             <!-- Parent activity meta-data to support API level 7+ -->
             <meta-data

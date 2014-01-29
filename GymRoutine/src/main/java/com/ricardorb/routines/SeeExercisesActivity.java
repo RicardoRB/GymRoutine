@@ -75,7 +75,7 @@ public class SeeExercisesActivity extends Fragment {
             String[] muscles = getResources().getStringArray(R.array.array_muscles);
 
             parser.setInput(fin, "UTF-8");
-            while (parser.next() != XmlPullParser.END_DOCUMENT){
+            while (parser.next() != XmlPullParser.END_DOCUMENT) {
                 if (parser.getEventType() != XmlPullParser.START_TAG) {
                     continue;
                 }
@@ -85,13 +85,13 @@ public class SeeExercisesActivity extends Fragment {
                 if (name.equals("Day")) {
                     //I take what number of day is that day
                     numDay = Integer.parseInt(parser.getAttributeValue(null, "num"));
-                }else if(name.equals("Muscle") && numDay == fragmentDay){
+                } else if (name.equals("Muscle") && numDay == fragmentDay) {
                     //Taking the numMuscle of every muscle I seek,
                     //the parser will not coming back here until
                     //each exercise of this muscle is read
                     numMuscle = Integer.parseInt(parser.getAttributeValue(null, "num"));
                     items.add(new SectionItem(muscles[numMuscle]));
-                }else if(name.equals("Exercise") && numDay == fragmentDay){
+                } else if (name.equals("Exercise") && numDay == fragmentDay) {
                     String numExercise = parser.getAttributeValue(null, "num");
                     switch (numMuscle) {
                         case 0:
@@ -145,31 +145,6 @@ public class SeeExercisesActivity extends Fragment {
             builder.create().show();
         }
 
-    }
-
-    private void readDay(XmlPullParser parser, ArrayList<Item> items) throws XmlPullParserException, IOException {
-        parser.require(XmlPullParser.START_TAG, null, "Day");
-        int numDay = -1;
-        while (parser.next() != XmlPullParser.END_TAG) {
-            if (parser.getEventType() != XmlPullParser.START_TAG) {
-                continue;
-            }
-            for (int i = 0; i < parser.getAttributeCount(); i++) {
-                if (parser.getAttributeName(i).equals("num")) {
-                    //What num day is
-                    numDay = Integer.parseInt(parser.getAttributeValue(i));
-                }
-            }
-            if (numDay == fragmentDay) {
-                String name = parser.getName();
-                if (name.equals("Muscle")) {
-                    readMuscle(parser, items);
-                } else {
-                    skip(parser);
-                }
-                break;
-            }
-        }
     }
 
     private void readMuscle(XmlPullParser parser, ArrayList<Item> items) throws XmlPullParserException, IOException {

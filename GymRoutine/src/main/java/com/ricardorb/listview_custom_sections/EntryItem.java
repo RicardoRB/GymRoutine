@@ -22,6 +22,8 @@ public class EntryItem implements Item {
         return this.numMuscle;
     }
 
-    public int getNumExercise(){return  this.numExercise;}
+    public int getNumExercise() {
+        return this.numExercise;
+    }
 
 }
