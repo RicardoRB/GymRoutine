@@ -40,7 +40,7 @@
             android:name="com.ricardorb.routines.DaysRoutineActivity"
             android:label="@string/title_activity_days_routine"/>
         <activity
-            android:name="com.ricardorb.routines.ReadFileActivity"
+            android:name=".ReadFileActivity"
             android:label="@string/title_activity_read_file"
             android:parentActivityName="com.ricardorb.gymroutine.MainActivity">
 

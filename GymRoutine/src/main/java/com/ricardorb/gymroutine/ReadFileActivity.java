@@ -1,4 +1,4 @@
-package com.ricardorb.routines;
+package com.ricardorb.gymroutine;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -18,7 +18,7 @@ import android.util.Xml;
 import android.view.Menu;
 
 import com.ricardorb.adapters.PagerAdapter;
-import com.ricardorb.gymroutine.R;
+import com.ricardorb.routines.SeeExercisesActivity;
 
 import org.xmlpull.v1.XmlPullParser;
 

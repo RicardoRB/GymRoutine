@@ -3,6 +3,7 @@ package com.ricardorb.gymroutine;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
@@ -23,7 +24,6 @@ import android.widget.Toast;
 
 import com.ricardorb.adapters.ListRoutinesAdapter;
 import com.ricardorb.routines.AddRoutineActivity;
-import com.ricardorb.routines.ReadFileActivity;
 
 import java.io.File;
 
@@ -73,7 +73,7 @@ public class RoutinesActivity extends Fragment {
             @Override
             public void onItemClick(AdapterView parent, View view, int position, long id) {
                 // TODO Auto-generated method stub
-                final String nameFile = ((TextView) ((LinearLayout) view).findViewWithTag(position)).getText().toString();
+                final String nameFile = ((TextView) view.findViewWithTag(position)).getText().toString();
                 Intent i = new Intent(getActivity(), ReadFileActivity.class);
                 i.putExtra("nameFile", nameFile);
                 startActivity(i);
@@ -89,12 +89,12 @@ public class RoutinesActivity extends Fragment {
                 String[] items = getResources().getStringArray(R.array.array_options_files);
                 options.setTitle(getResources().getString(R.string.alert_title_options_files)).setItems(items, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int item) {
-                        final String nameFile = ((TextView) ((LinearLayout) v).findViewWithTag(position)).getText().toString();
+                        final String nameFile = ((TextView) v.findViewWithTag(position)).getText().toString();
                         if (item <= 0) {
                             Intent i = new Intent(getActivity(), ReadFileActivity.class);
                             i.putExtra("nameFile", nameFile);
                             startActivity(i);
-                        } else {
+                        } else if (item == 1) {
                             //The user choose delete then I put another alert saying if he is sure
                             AlertDialog.Builder delete =
                                     new AlertDialog.Builder(getActivity());
@@ -105,10 +105,11 @@ public class RoutinesActivity extends Fragment {
                                         public void onClick(DialogInterface dialog, int id) {
                                             File deleteFile = new File(Environment.getExternalStorageDirectory()
                                                     + File.separator + "GymRoutines" + File.separator + nameFile);
-                                            deleteFile.delete();
-                                            ListRoutinesAdapter adapter = new ListRoutinesAdapter(getActivity());
-                                            lv.setAdapter(adapter);
-                                            Toast.makeText(getActivity(), nameFile + getResources().getString(R.string.toast_delete_file), Toast.LENGTH_LONG).show();
+                                            if (deleteFile.delete()) {
+                                                ListRoutinesAdapter adapter = new ListRoutinesAdapter(getActivity());
+                                                lv.setAdapter(adapter);
+                                                Toast.makeText(getActivity(), nameFile + getResources().getString(R.string.toast_delete_file), Toast.LENGTH_LONG).show();
+                                            }
                                             dialog.cancel();
                                         }
                                     })
@@ -119,6 +120,13 @@ public class RoutinesActivity extends Fragment {
                                     });
                             delete.create();
                             delete.show();
+                        } else {
+                            Intent intent = new Intent(android.content.Intent.ACTION_SEND);
+                            intent.setType("text/xml");
+                            intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(Environment.getExternalStorageDirectory()
+                                    + File.separator + "GymRoutines" + File.separator + nameFile)));
+                            startActivity(Intent.createChooser(intent, "GymRoutines"));
+
                         }
                     }
                 });
