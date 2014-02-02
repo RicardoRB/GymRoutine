@@ -2,6 +2,7 @@ package com.ricardorb.routines;
 
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.os.Environment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v4.app.Fragment;
@@ -16,6 +17,8 @@ import android.widget.EditText;
 import android.widget.Spinner;
 
 import com.ricardorb.gymroutine.R;
+
+import java.io.File;
 
 public class AddRoutineActivity extends ActionBarActivity {
 
@@ -74,13 +77,34 @@ public class AddRoutineActivity extends ActionBarActivity {
             et = (EditText) rootView.findViewById(R.id.editTextNameRoutine);
             Button next = (Button) rootView.findViewById(R.id.btn_Next);
 
+            final boolean isSDPresent = Environment.getExternalStorageState()
+                    .equals(Environment.MEDIA_MOUNTED);
+
             next.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    File fileRoutine = new File(Environment.getExternalStorageDirectory()
+                            + File.separator + "GymRoutines"+File.separator+et.getText().toString()+".gym");
+
+
                     if (et.getText().length() <= 0) {
                         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                         builder.setTitle(getResources().getString(R.string.alert_title_nameRoutine));
                         builder.setMessage(getResources().getString(R.string.alert_message_nameRoutine));
+                        builder.setPositiveButton("OK", null);
+                        builder.setIcon(R.drawable.ic_launcher);
+                        builder.create().show();
+                    }else if(!isSDPresent){
+                        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                        builder.setTitle(getResources().getString(R.string.alert_title_errorSD));
+                        builder.setMessage(getResources().getString(R.string.alert_message_errorSD));
+                        builder.setPositiveButton("OK", null);
+                        builder.setIcon(R.drawable.ic_launcher);
+                        builder.create().show();
+                    }else if(fileRoutine.exists()){
+                        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                        builder.setTitle(getResources().getString(R.string.alert_title_fileExist));
+                        builder.setMessage(getResources().getString(R.string.alert_message_fileExist));
                         builder.setPositiveButton("OK", null);
                         builder.setIcon(R.drawable.ic_launcher);
                         builder.create().show();

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Gym Routine</string>
+    <string name="app_name">GymRoutine</string>
     <!-- Activities titles -->
     <string name="title_activity_chronometer">Chronometer</string>
     <string name="title_activity_routines">Routines</string>
@@ -38,95 +38,6 @@
         <item>Abdominals</item>
         <item>Cardio</item>
     </string-array>
-    <!--<string-array name="array_chest_exercises">
-        <item>Barbell Bench Press</item>
-        <item>Incline Barbell Bench Press</item>
-        <item>Dumbbell Bench Press</item>
-        <item>Incline Dumbbell Press</item>
-        <item>Dumbbell Pull Over</item>
-        <item>Butterfly Machine Fly</item>
-        <item>Push Ups</item>
-        <item>Chest Dips</item>
-        <item>Dumbbell Flyes</item>
-        <item>Decline Chest Press</item>
-    </string-array>
-    <string-array name="array_back_exercises">
-        <item>Pull-Ups</item>
-        <item>T-Bar rows</item>
-        <item>Bent Over Barbell Rows</item>
-        <item>Deadlifts</item>
-        <item>Lat Pulldowns Narrow Grip</item>
-        <item>Lat Pulldowns</item>
-        <item>Dumbbell Rows</item>
-        <item>Seated Cable Rows</item>
-        <item>Reverse Grip Bent Over Rows</item>
-        <item>Standing Pulldowns</item>
-    </string-array>
-    <string-array name="array_biceps_exercises">
-        <item>Standing Barbell Curls</item>
-        <item>Standing Dumbbell Curls</item>
-        <item>Dumbbell Hammer Curls</item>
-        <item>Incline Dumbbell Curls</item>
-        <item>Preacher Curls</item>
-        <item>Dumbbell Concentration Curls</item>
-        <item>Standing Bicep Curl on Low Pulley</item>
-        <item>Prone Bicep Curl</item>
-        <item>Supine Bicep Curl</item>
-    </string-array>
-    <string-array name="array_triceps_exercises">
-        <item>Lying Barbell Extensions</item>
-        <item>Close Grip Bench Press</item>
-        <item>Tricep Dumbbell Extensions</item>
-        <item>Tricep Push Downs</item>
-        <item>Tricep Dumbbell Kick Backs</item>
-        <item>Tricep Bench Dips</item>
-    </string-array>
-    <string-array name="array_shoulders_exercises">
-        <item>Barbell Military press</item>
-        <item>Dumbbell Military press</item>
-        <item>Front Lateral raise</item>
-        <item>Side Lateral raise</item>
-        <item>Arnold press</item>
-        <item>Bent-over lateral raise</item>
-        <item>Shrugs</item>
-        <item>Upright row</item>
-        <item>Shoulder machine press</item>
-        <item>Press Behind Neck</item>
-    </string-array>
-    <string-array name="array_legs_exercises">
-        <item>Stationary Lunge</item>
-        <item>Toe Raise</item>
-        <item>Barbell Squat</item>
-        <item>Heels-Elevated Barbell Front Squat</item>
-        <item>Barbell Step-Up</item>
-        <item>Leg Extension</item>
-        <item>Seated Leg Curl</item>
-        <item>Leg Press</item>
-        <item>Incline Leg Press</item>
-        <item>Good Morning</item>
-        <item>Seated Hip Adduction</item>
-        <item>Standing Hip Adduction</item>
-        <item>Calf Raise</item>
-    </string-array>
-    <string-array name="array_forearms_exercises">
-        <item>Reverse Curls</item>
-        <item>Barbell Wrist Curls</item>
-        <item>Dumbbell Wrist Curls</item>
-        <item>Barbell Reverse Wrist Curls</item>
-        <item>Bent Arm Disc Roller</item>
-    </string-array>
-    <string-array name="array_abdominals_exercises">
-        <item>Leg Raise</item>
-        <item>Weighted Twist</item>
-        <item>Dumbbell Side Bend</item>
-        <item>Bench Leg Pull-In / Knee-up</item>
-        <item>Cross-Body Crunch</item>
-        <item>Swiss Ball Crunch</item>
-        <item>Plank</item>
-        <item>Kneeling Cable Crunch</item>
-        <item>Jackknife Sit-up / Crunch</item>
-        <item>Russian Twist</item>
-    </string-array> -->
     <string-array name="array_chest_exercises">
         <item>Push Ups</item>
         <item>Push-Ups With Feet Elevated</item>
@@ -401,7 +312,8 @@
     <string name="alert_message_errorOpenFile">There was an error opening the file: </string>
     <string name="alert_title_errorCreatingFile">Error Creating The File</string>
     <string name="alert_message_errorCreatingFile">There was an error creating the file:</string>
-    <string name="alert_message_errorSD">No SD</string>
+    <string name="alert_title_errorSD">Insert SD card</string>
+    <string name="alert_message_errorSD">Please, insert a SD card in your phone</string>
     <string name="alert_message_createFolder">A new folder was create in:</string>
     <string name="alert_title_creatingFile">Creating File</string>
     <string name="alert_message_creatingFileDays">Creating file by days...</string>
@@ -409,6 +321,8 @@
     <string name="alert_message_delete_file">Do you want to delete this file?</string>
     <string name="alert_buttons_yes">Yes</string>
     <string name="alert_buttons_no">No</string>
+    <string name="alert_title_fileExist">That routine exist</string>
+    <string name="alert_message_fileExist">That routine exist already. Please, check the name of new routine.</string>
     <!-- Toast -->
     <string name="toast_delete_file">was deleted.</string>
     <string name="toast_refresh_files">Routines list files was refreshed</string>

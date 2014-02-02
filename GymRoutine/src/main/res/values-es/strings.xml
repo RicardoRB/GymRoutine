@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Gym Routine</string>
+    <string name="app_name">GymRoutine</string>
     <!-- Activities titles -->
     <string name="title_activity_chronometer">Cronómetro</string>
     <string name="title_activity_routines">Rutinas</string>
@@ -306,13 +306,14 @@
     <!-- Tab -->
     <string name="tab_day">Día</string>
     <!-- Alert Dialog -->
-    <string name="alert_title_nameRoutine">Nombre de Rutina</string>
+    <string name="alert_title_nameRoutine">Nombre de la Rutina</string>
     <string name="alert_message_nameRoutine">Debes insertar un nombre primero</string>
     <string name="alert_title_errorOpenFile">Error Abriendo el Archivo</string>
     <string name="alert_message_errorOpenFile">Hubo un error abriendo el archivo: </string>
     <string name="alert_title_errorCreatingFile">Error Creando el Archivo</string>
     <string name="alert_message_errorCreatingFile">Hubo un error creando el archivo:</string>
-    <string name="alert_message_errorSD">No hay SD</string>
+    <string name="alert_title_errorSD">No hay tarjeta SD</string>
+    <string name="alert_message_errorSD">Por favor, inserte una tarjeta SD</string>
     <string name="alert_message_createFolder">Una nueva carpeta fue creado en:</string>
     <string name="alert_title_creatingFile">Creando Archivo</string>
     <string name="alert_message_creatingFileDays">Creando archivo por días...</string>
@@ -320,6 +321,8 @@
     <string name="alert_message_delete_file">¿Quieres eliminar éste archivo?</string>
     <string name="alert_buttons_yes">Sí</string>
     <string name="alert_buttons_no">No</string>
+    <string name="alert_title_fileExist">Esa rutina existe</string>
+    <string name="alert_message_fileExist">Esa rutina ya existe. Por favor, comprueba el nombre de la nueva rutina.</string>
     <!-- Toast -->
     <string name="toast_delete_file">fue eliminado.</string>
     <string name="toast_refresh_files">La lista de archivo de rutinas fue refrescado</string>

@@ -1,15 +1,11 @@
 package com.ricardorb.listview_custom_sections;
 
 import java.util.ArrayList;
-import java.util.Locale;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.content.res.AssetManager;
-import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
-import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -79,18 +75,10 @@ public class EntryAdapter extends ArrayAdapter<Item> {
                     v.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            //First, I need to take the resources from the default resources
-                            //If I do not do this, will throw me errors about name of file
-                            //Because muscle array is different in every language
                             Resources standardResources = mContext.getResources();
-                            AssetManager assets = standardResources.getAssets();
-                            DisplayMetrics metrics = standardResources.getDisplayMetrics();
-                            Configuration config = new Configuration(standardResources.getConfiguration());
-                            config.locale = Locale.UK;
-                            Resources defaultResources = new Resources(assets, metrics, config);
 
                             //Taking the picture for that exercise
-                            String[] muscles = defaultResources.getStringArray(R.array.array_muscles);
+                            String[] muscles = {"chest","back","biceps","triceps","shoulders","legs","forearms","abdominals","cardio"};
                             String mDrawableName = (muscles[ei.getNumMuscle()] + "_" + ei.getNumExercise()).toLowerCase();
                             int resID = standardResources.getIdentifier(mDrawableName, "drawable", mContext.getPackageName());
                             Drawable drawable = standardResources.getDrawable(resID);

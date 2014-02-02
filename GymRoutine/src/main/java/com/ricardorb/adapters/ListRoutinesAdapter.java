@@ -1,15 +1,16 @@
 package com.ricardorb.adapters;
 
 import java.io.File;
+import java.text.DateFormat;
+import java.util.Date;
 
 
 import android.content.Context;
 import android.os.Environment;
-import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -18,18 +19,14 @@ import com.ricardorb.gymroutine.R;
 
 public class ListRoutinesAdapter extends BaseAdapter {
     private Context mContext;
-    private String[] archivos = new String[0];
-
-    private ImageView icon;
-    private TextView text;
-    LinearLayout ll;
+    private String[] nameFilesDirectory;
+    private File[] filesDirectory;
+    Date[] dateFiles;
 
     File directory;
 
     public ListRoutinesAdapter(Context c) {
         mContext = c;
-        // archivos =
-        //c.getResources().getStringArray(android.R.array.emailAddressTypes);
         // Reading files
         boolean isSDPresent = Environment.getExternalStorageState()
                 .equals(Environment.MEDIA_MOUNTED);
@@ -47,27 +44,35 @@ public class ListRoutinesAdapter extends BaseAdapter {
                                 .show();
                     }
                 }
+                filesDirectory = directory.listFiles();
+
                 //Taking all the files in directory
-                archivos = directory.list();
+                nameFilesDirectory = directory.list();
 
                 //Counting how many files with .gym
                 int j = 0;
-                for (String i : archivos) {
+                for (String i : nameFilesDirectory) {
                     if (i.endsWith(".gym")) {
                         j++;
                     }
                 }
-                //Taking the name of files with .gym in filter
+
+                //Taking the name of files with .gym in filter and the date
                 String[] filter = new String[j];
+                dateFiles = new Date[j];
+
                 j = 0;
-                for (String i : archivos) {
+                for (String i : nameFilesDirectory) {
                     if (i.endsWith(".gym")) {
+                        dateFiles[j] = new Date(filesDirectory[j].lastModified());
                         filter[j] = i;
                         j++;
                     }
                 }
+
+
                 //Cloning array
-                archivos = filter.clone();
+                nameFilesDirectory = filter.clone();
             } catch (Exception e) {
                 // TODO: handle exception
                 Toast.makeText(mContext, "Error: " + e.getMessage(),
@@ -84,7 +89,7 @@ public class ListRoutinesAdapter extends BaseAdapter {
     @Override
     public int getCount() {
         // TODO Auto-generated method stub
-        return archivos.length;
+        return nameFilesDirectory.length;
     }
 
     @Override
@@ -102,20 +107,16 @@ public class ListRoutinesAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         // TODO Auto-generated method stub
-        ll = new LinearLayout(mContext);
-        icon = new ImageView(mContext);
-        text = new TextView(mContext);
-        ll.setOrientation(LinearLayout.HORIZONTAL);
 
-        // icon.setLayoutParams(new LinearLayout.LayoutParams(24, 24)); size
-        icon.setScaleType(ImageView.ScaleType.FIT_START); // image scale
-        icon.setImageResource(android.R.drawable.ic_menu_agenda);
+        LayoutInflater vi = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        LinearLayout ll = (LinearLayout) vi.inflate(R.layout.list_item_routines_files, null);
+        TextView nameFile = (TextView) ll.findViewById(R.id.nameFile);
+        TextView dateFile = (TextView) ll.findViewById(R.id.lastModified);
+        DateFormat df = DateFormat.getDateInstance(DateFormat.FULL, mContext.getResources().getConfiguration().locale);
 
-        text.setGravity(Gravity.LEFT);
-        text.setText(archivos[position]);
-        text.setTag(position);
-        ll.addView(icon);
-        ll.addView(text);
+        nameFile.setText(nameFilesDirectory[position].substring(0,nameFilesDirectory[position].indexOf(".")));
+        nameFile.setTag(position);
+        dateFile.setText(df.format(dateFiles[position]));
 
         return ll;
     }

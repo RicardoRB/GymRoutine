@@ -17,7 +17,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -73,7 +72,7 @@ public class RoutinesActivity extends Fragment {
             @Override
             public void onItemClick(AdapterView parent, View view, int position, long id) {
                 // TODO Auto-generated method stub
-                final String nameFile = ((TextView) view.findViewWithTag(position)).getText().toString();
+                final String nameFile = ((TextView) view.findViewWithTag(position)).getText().toString()+".gym";
                 Intent i = new Intent(getActivity(), ReadFileActivity.class);
                 i.putExtra("nameFile", nameFile);
                 startActivity(i);
@@ -89,17 +88,17 @@ public class RoutinesActivity extends Fragment {
                 String[] items = getResources().getStringArray(R.array.array_options_files);
                 options.setTitle(getResources().getString(R.string.alert_title_options_files)).setItems(items, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int item) {
-                        final String nameFile = ((TextView) v.findViewWithTag(position)).getText().toString();
+                        final String nameFile = ((TextView) v.findViewWithTag(position)).getText().toString()+".gym";
                         if (item <= 0) {
                             Intent i = new Intent(getActivity(), ReadFileActivity.class);
                             i.putExtra("nameFile", nameFile);
                             startActivity(i);
                         } else if (item == 1) {
                             //The user choose delete then I put another alert saying if he is sure
-                            AlertDialog.Builder delete =
+                            AlertDialog.Builder deleteDialog =
                                     new AlertDialog.Builder(getActivity());
 
-                            delete.setMessage(getResources().getString(R.string.alert_message_delete_file))
+                            deleteDialog.setMessage(getResources().getString(R.string.alert_message_delete_file))
                                     .setTitle(nameFile)
                                     .setPositiveButton(getResources().getString(R.string.alert_buttons_yes), new DialogInterface.OnClickListener() {
                                         public void onClick(DialogInterface dialog, int id) {
@@ -118,11 +117,11 @@ public class RoutinesActivity extends Fragment {
                                             dialog.cancel();
                                         }
                                     });
-                            delete.create();
-                            delete.show();
+                            deleteDialog.create();
+                            deleteDialog.show();
                         } else {
                             Intent intent = new Intent(android.content.Intent.ACTION_SEND);
-                            intent.setType("text/xml");
+                            intent.setType("*/*");
                             intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(Environment.getExternalStorageDirectory()
                                     + File.separator + "GymRoutines" + File.separator + nameFile)));
                             startActivity(Intent.createChooser(intent, "GymRoutines"));
