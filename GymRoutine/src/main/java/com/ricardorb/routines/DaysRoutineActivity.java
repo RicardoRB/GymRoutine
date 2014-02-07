@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Vector;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Environment;
 import android.support.v7.app.ActionBarActivity;
@@ -354,9 +355,16 @@ public class DaysRoutineActivity extends ActionBarActivity implements ActionBar.
 
         FileOutputStream fout = null;
 
+        boolean isSDPresent = Environment.getExternalStorageState()
+                .equals(Environment.MEDIA_MOUNTED);
+
         try {
-            fout = new FileOutputStream(Environment.getExternalStorageDirectory()
-                    + File.separator + "GymRoutines" + File.separator + nameRoutine + ".gym");
+            if (isSDPresent) {
+                fout = new FileOutputStream(Environment.getExternalStorageDirectory()
+                        + File.separator + "GymRoutines" + File.separator + nameRoutine + ".gym");
+            } else {
+                fout = openFileOutput(nameRoutine + ".gym", Context.MODE_PRIVATE);
+            }
         } catch (FileNotFoundException e) {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setTitle(getResources().getString(R.string.alert_title_errorCreatingFile));
@@ -487,11 +495,6 @@ public class DaysRoutineActivity extends ActionBarActivity implements ActionBar.
                 }
                 countMuscle = 0;
                 serializer.endTag(null, "Day");
-                /*updateBarHandler.post(new Runnable() {
-                    public void run() {
-                        barProgressDialog.incrementProgressBy(1);
-                    }
-                });*/
             }
 
             serializer.endTag(null, "GymRoutine");

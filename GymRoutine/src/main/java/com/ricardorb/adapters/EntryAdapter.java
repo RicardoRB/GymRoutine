@@ -1,4 +1,4 @@
-package com.ricardorb.listview_custom_sections;
+package com.ricardorb.adapters;
 
 import java.util.ArrayList;
 
@@ -6,6 +6,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ricardorb.gymroutine.R;
+import com.ricardorb.listview_custom_sections.EntryItem;
+import com.ricardorb.listview_custom_sections.Item;
+import com.ricardorb.listview_custom_sections.SectionItem;
 import com.ricardorb.routines.DaysRoutineActivity;
 
 public class EntryAdapter extends ArrayAdapter<Item> {
@@ -48,31 +52,30 @@ public class EntryAdapter extends ArrayAdapter<Item> {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        View v = convertView;
 
         final Item item = items.get(position);
         if (item != null) {
             if (item.isSection()) {
                 SectionItem si = (SectionItem) item;
-                v = vi.inflate(R.layout.list_item_section, null);
+                convertView = vi.inflate(R.layout.list_item_section, parent,false);
 
-                v.setOnClickListener(null);
-                v.setOnLongClickListener(null);
-                v.setLongClickable(false);
+                convertView.setOnClickListener(null);
+                convertView.setOnLongClickListener(null);
+                convertView.setLongClickable(false);
 
-                final TextView sectionView = (TextView) v.findViewById(R.id.list_item_section_text);
+                final TextView sectionView = (TextView) convertView.findViewById(R.id.list_item_section_text);
                 sectionView.setText(si.getTitle());
             } else {
                 if (openFile) {
                     final EntryItem ei = (EntryItem) item;
-                    v = vi.inflate(R.layout.list_item_see, null);
-                    final TextView title = (TextView) v.findViewById(R.id.list_item_entry_title);
+                    convertView = vi.inflate(R.layout.list_item_see, parent,false);
+                    final TextView title = (TextView) convertView.findViewById(R.id.list_item_entry_title);
                     if (title != null) {
                         title.setText(ei.title);
                     }
 
 
-                    v.setOnClickListener(new View.OnClickListener() {
+                    convertView.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
                             Resources standardResources = mContext.getResources();
@@ -94,8 +97,9 @@ public class EntryAdapter extends ArrayAdapter<Item> {
 
                 } else {
                     final EntryItem ei = (EntryItem) item;
-                    v = vi.inflate(R.layout.list_item_entry, null);
-                    final CheckBox sub_cb = (CheckBox) v.findViewById(R.id.cb_list_item_entry_summary);
+                    convertView = vi.inflate(R.layout.list_item_entry,  parent,false);
+                    final CheckBox sub_cb = (CheckBox) convertView.findViewById(R.id.cb_list_item_entry_summary);
+                    Log.e("SECTION","NO ES SECTION");
 
                     if (sub_cb != null) {
                         sub_cb.setText(ei.title);
@@ -104,7 +108,7 @@ public class EntryAdapter extends ArrayAdapter<Item> {
                         sub_cb.setChecked(checkeds[ei.getNumMuscle()][ei.getNumExercise()]);
                     }
 
-                    v.setOnClickListener(new View.OnClickListener() {
+                    sub_cb.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
                             ((DaysRoutineActivity) mContext).setCheckedExercises(ei.title, sub_cb.isChecked(), fragmentDay);
@@ -114,7 +118,12 @@ public class EntryAdapter extends ArrayAdapter<Item> {
 
             }
         }
-        return v;
+        return convertView;
     }
 
+    private static class ViewHolder {
+        TextView title;
+        TextView checkbox;
+        View view;
+    }
 }

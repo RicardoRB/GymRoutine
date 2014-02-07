@@ -30,4 +30,12 @@
 
     </LinearLayout>
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="right"
+        android:text=">"
+        android:textAppearance="?android:textAppearanceLarge"
+        android:id="@+id/nameFile" />
+
 </LinearLayout>

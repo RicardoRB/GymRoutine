@@ -5,6 +5,9 @@
     android:versionName="1.0">
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
 
     <uses-sdk
         android:minSdkVersion="8"
@@ -38,7 +41,7 @@
         </activity>
         <activity
             android:name="com.ricardorb.routines.DaysRoutineActivity"
-            android:label="@string/title_activity_days_routine"/>
+            android:label="@string/title_activity_days_routine" />
         <activity
             android:name=".ReadFileActivity"
             android:label="@string/title_activity_read_file"
@@ -49,6 +52,12 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
+
+        <activity android:name="com.google.android.gms.ads.AdActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"/>
+
+        <meta-data android:name="com.google.android.gms.version"
+           android:value="@integer/google_play_services_version" />
     </application>
 
 </manifest>

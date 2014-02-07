@@ -2,16 +2,18 @@ package com.ricardorb.adapters;
 
 import java.io.File;
 import java.text.DateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.TreeSet;
 
 
 import android.content.Context;
 import android.os.Environment;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,17 +23,28 @@ public class ListRoutinesAdapter extends BaseAdapter {
     private Context mContext;
     private String[] nameFilesDirectory;
     private File[] filesDirectory;
-    Date[] dateFiles;
+    private Date[] dateFiles;
 
-    File directory;
+    private static final int TYPE_ITEM = 0;
+    private static final int TYPE_SEPARATOR = 1;
+    private static final int TYPE_MAX_COUNT = TYPE_SEPARATOR + 1;
+
+    private ArrayList<String> mData = new ArrayList<String>();
+    private LayoutInflater mInflater;
+
+    private TreeSet<Integer> mSeparatorsSet = new TreeSet<Integer>();
+
+    private File directory;
 
     public ListRoutinesAdapter(Context c) {
         mContext = c;
+        mInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         // Reading files
         boolean isSDPresent = Environment.getExternalStorageState()
                 .equals(Environment.MEDIA_MOUNTED);
         if (isSDPresent) {
             try {
+                addSeparatorItem("SD");
                 directory = new File(Environment.getExternalStorageDirectory()
                         + File.separator + "GymRoutines");
 
@@ -53,26 +66,22 @@ public class ListRoutinesAdapter extends BaseAdapter {
                 int j = 0;
                 for (String i : nameFilesDirectory) {
                     if (i.endsWith(".gym")) {
+                        addItem(i.substring(0,i.indexOf(".")));
                         j++;
                     }
                 }
 
-                //Taking the name of files with .gym in filter and the date
-                String[] filter = new String[j];
+                //Taking the date of files with .gym in filter
                 dateFiles = new Date[j];
 
                 j = 0;
                 for (String i : nameFilesDirectory) {
                     if (i.endsWith(".gym")) {
                         dateFiles[j] = new Date(filesDirectory[j].lastModified());
-                        filter[j] = i;
                         j++;
                     }
                 }
 
-
-                //Cloning array
-                nameFilesDirectory = filter.clone();
             } catch (Exception e) {
                 // TODO: handle exception
                 Toast.makeText(mContext, "Error: " + e.getMessage(),
@@ -84,41 +93,95 @@ public class ListRoutinesAdapter extends BaseAdapter {
                     c.getResources().getString(R.string.alert_message_errorSD), Toast.LENGTH_SHORT)
                     .show();
         }
+
+        /*
+        ****future feature****
+        *
+        addSeparatorItem("Internal");
+
+        for(String i:mContext.getFilesDir().list()){
+            addItem(i);
+        }
+        */
+
+    }
+
+    public void addItem(final String item) {
+        mData.add(item);
+        notifyDataSetChanged();
+    }
+
+    public void addSeparatorItem(final String item) {
+        mData.add(item);
+        // save separator position
+        mSeparatorsSet.add(mData.size() - 1);
+        notifyDataSetChanged();
     }
 
     @Override
+    public int getItemViewType(int position) {
+        return mSeparatorsSet.contains(position) ? TYPE_SEPARATOR : TYPE_ITEM;
+    }
+
+    @Override
+    public int getViewTypeCount() {
+        return TYPE_MAX_COUNT;
+    }
+
     public int getCount() {
-        // TODO Auto-generated method stub
-        return nameFilesDirectory.length;
+        return mData.size();
     }
 
-    @Override
-    public Object getItem(int posi) {
-        // TODO Auto-generated method stub
-        return posi;
+    public String getItem(int position) {
+        return mData.get(position);
     }
 
-    @Override
-    public long getItemId(int posi) {
-        // TODO Auto-generated method stub
-        return posi;
+    public long getItemId(int position) {
+        return position;
     }
 
-    @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+        ViewHolder holder;
+        int type = getItemViewType(position);
+        if (convertView == null) {
+            holder = new ViewHolder();
+            switch (type) {
+                case TYPE_ITEM:
+                    convertView = mInflater.inflate(R.layout.list_item_routines_files, null);
+                    holder.textViewNam = (TextView) convertView.findViewById(R.id.nameFile);
+                    holder.textViewSub = (TextView) convertView.findViewById(R.id.lastModified);
+                    break;
+                case TYPE_SEPARATOR:
+                    convertView = mInflater.inflate(R.layout.list_item_section, null);
+                    holder.textViewNam = (TextView) convertView.findViewById(R.id.list_item_section_text);
+                    break;
+            }
+            convertView.setTag(holder);
+        } else {
+            holder = (ViewHolder) convertView.getTag();
+        }
+        switch (type) {
+            case TYPE_ITEM:
+                DateFormat df = DateFormat.getDateInstance(DateFormat.FULL, mContext.getResources().getConfiguration().locale);
+                holder.textViewNam.setText(mData.get(position));
+                holder.textViewNam.setTag(position);
+                holder.textViewSub.setText(df.format(dateFiles[position-1]));
+                break;
+            case TYPE_SEPARATOR:
+                holder.textViewNam.setText(mData.get(position));
+                break;
+        }
+        return convertView;
+    }
+
+    private static class ViewHolder {
+        public TextView textViewNam;
+        public TextView textViewSub;
+    }
+
+    public boolean onTouch(View v, MotionEvent event) {
         // TODO Auto-generated method stub
-
-        LayoutInflater vi = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        LinearLayout ll = (LinearLayout) vi.inflate(R.layout.list_item_routines_files, null);
-        TextView nameFile = (TextView) ll.findViewById(R.id.nameFile);
-        TextView dateFile = (TextView) ll.findViewById(R.id.lastModified);
-        DateFormat df = DateFormat.getDateInstance(DateFormat.FULL, mContext.getResources().getConfiguration().locale);
-
-        nameFile.setText(nameFilesDirectory[position].substring(0,nameFilesDirectory[position].indexOf(".")));
-        nameFile.setTag(position);
-        dateFile.setText(df.format(dateFiles[position]));
-
-        return ll;
+        return false;
     }
 
 }

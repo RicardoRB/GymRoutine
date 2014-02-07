@@ -9,7 +9,15 @@
         android:layout_height="wrap_content"
         android:id="@+id/lvSeeExercises"
         android:fastScrollEnabled="true"
-        android:layout_alignParentTop="true"
+        android:layout_above="@+id/see_exercises_adView" />
+
+    <com.google.android.gms.ads.AdView xmlns:ads="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/see_exercises_adView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        ads:adUnitId="ca-app-pub-*/*"
+        ads:adSize="BANNER"
+        android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 

@@ -15,7 +15,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import com.google.android.gms.ads.*;
 
+import com.google.android.gms.ads.AdView;
 import com.ricardorb.gymroutine.R;
 
 import java.io.File;
@@ -27,6 +29,7 @@ public class AddRoutineActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_routine);
+
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
 
@@ -76,6 +79,10 @@ public class AddRoutineActivity extends ActionBarActivity {
             sp = (Spinner) rootView.findViewById(R.id.spinnerDays);
             et = (EditText) rootView.findViewById(R.id.editTextNameRoutine);
             Button next = (Button) rootView.findViewById(R.id.btn_Next);
+            AdView adView = (AdView)rootView.findViewById(R.id.add_routine_adView);
+
+            AdRequest adRequest = new AdRequest.Builder().build();
+            adView.loadAd(adRequest);
 
             final boolean isSDPresent = Environment.getExternalStorageState()
                     .equals(Environment.MEDIA_MOUNTED);

@@ -19,6 +19,8 @@
     <string name="action_refresh_routines">Refresh routines</string>
     <!-- Buttons -->
     <string name="btn_reset">Reset</string>
+    <string name="btn_start">Start</string>
+    <string name="btn_pause">Pause</string>
     <string name="btn_next">Next</string>
     <!-- Tags -->
     <string name="txt_routineName">Routine Name</string>
@@ -323,6 +325,8 @@
     <string name="alert_buttons_no">No</string>
     <string name="alert_title_fileExist">That routine exist</string>
     <string name="alert_message_fileExist">That routine exist already. Please, check the name of new routine.</string>
+    <string name="alert_title_musicIntent">Opening Music</string>
+    <string name="alert_message_musicIntent">There was an error opening the music application, maybe you do not have any music application installed.</string>
     <!-- Toast -->
     <string name="toast_delete_file">was deleted.</string>
     <string name="toast_refresh_files">Routines list files was refreshed</string>

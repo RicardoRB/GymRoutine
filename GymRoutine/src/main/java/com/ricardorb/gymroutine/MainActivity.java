@@ -3,6 +3,7 @@ package com.ricardorb.gymroutine;
 import java.util.List;
 import java.util.Vector;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.provider.MediaStore;
 import android.support.v7.app.ActionBarActivity;
@@ -94,7 +95,16 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         // as you specify a parent activity in AndroidManifest.xml.
         switch (item.getItemId()) {
             case R.id.action_music_routines:
-                startActivity(new Intent(MediaStore.INTENT_ACTION_MUSIC_PLAYER));
+                try{
+                    startActivity(new Intent(MediaStore.INTENT_ACTION_MUSIC_PLAYER));
+                } catch (Exception e) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                    builder.setTitle(getResources().getString(R.string.alert_title_musicIntent));
+                    builder.setMessage(getResources().getString(R.string.alert_message_musicIntent) + " " + e.getMessage());
+                    builder.setPositiveButton("OK", null);
+                    builder.setIcon(R.drawable.ic_launcher);
+                    builder.create().show();
+                }
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

@@ -10,19 +10,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.ricardorb.gymroutine.R;
 import com.ricardorb.gymroutine.ReadFileActivity;
-import com.ricardorb.listview_custom_sections.EntryAdapter;
+import com.ricardorb.adapters.EntryAdapter;
 import com.ricardorb.listview_custom_sections.EntryItem;
 import com.ricardorb.listview_custom_sections.Item;
 import com.ricardorb.listview_custom_sections.SectionItem;
 
 import org.xmlpull.v1.XmlPullParser;
-import org.xmlpull.v1.XmlPullParserException;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.IOException;
 import java.util.ArrayList;
 
 public class SeeExercisesActivity extends Fragment {
@@ -34,6 +34,10 @@ public class SeeExercisesActivity extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_see_exercises, container, false);
         ListView lv = (ListView) rootView.findViewById(R.id.lvSeeExercises);
+        AdView adView = (AdView)rootView.findViewById(R.id.see_exercises_adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        adView.loadAd(adRequest);
+
         if (savedInstanceState != null) {
             fragmentDay = savedInstanceState.getInt("fragmentDay");
         } else {

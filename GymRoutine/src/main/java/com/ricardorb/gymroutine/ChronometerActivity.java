@@ -15,6 +15,9 @@ import android.widget.Chronometer;
 import android.os.SystemClock;
 import android.view.View.OnClickListener;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+
 
 public class ChronometerActivity extends Fragment {
     private Chronometer crono;
@@ -23,6 +26,7 @@ public class ChronometerActivity extends Fragment {
     private long time;
     private boolean cronoRun = true;
     private Button btnReset;
+    private Button btnStart;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -39,14 +43,20 @@ public class ChronometerActivity extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_chronometer, container, false);
+        AdView adView = (AdView)rootView.findViewById(R.id.chronometer_adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        adView.loadAd(adRequest);
+
         this.crono = (Chronometer) rootView.findViewById(R.id.cm_cronometro);
-        this.crono.setOnClickListener(new OnClickListener() {
+
+        this.btnStart = (Button) rootView.findViewById(R.id.btn_start);
+        this.btnStart.setOnClickListener(new OnClickListener() {
             @Override
-            public void onClick(View v) {
-                // TODO Auto-generated method stub
+            public void onClick(View view) {
                 if (running) {
                     crono.stop();
                     time = SystemClock.elapsedRealtime();
+                    btnStart.setText(getResources().getString(R.string.btn_start));
                     running = false;
                     pause = true;
                 } else {
@@ -56,6 +66,7 @@ public class ChronometerActivity extends Fragment {
                     } else {
                         crono.setBase(SystemClock.elapsedRealtime());
                     }
+                    btnStart.setText(getResources().getString(R.string.btn_pause));
                     crono.start();
                     running = true;
                     pause = false;

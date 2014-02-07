@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 
 import com.ricardorb.gymroutine.R;
-import com.ricardorb.listview_custom_sections.EntryAdapter;
+import com.ricardorb.adapters.EntryAdapter;
 import com.ricardorb.listview_custom_sections.EntryItem;
 import com.ricardorb.listview_custom_sections.Item;
 import com.ricardorb.listview_custom_sections.SectionItem;

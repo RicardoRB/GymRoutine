@@ -17,4 +17,15 @@
         android:ellipsize="marquee"
         android:fadingEdge="horizontal" />
 
+    <TextView
+        android:id="@+id/list_item_entry_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:singleLine="true"
+        android:gravity="right"
+        android:text=">"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:ellipsize="marquee"
+        android:fadingEdge="horizontal" />
+
 </LinearLayout>
