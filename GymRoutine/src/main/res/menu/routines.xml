@@ -9,10 +9,4 @@
         android:orderInCategory="100"
         app:showAsAction="ifRoom"
         android:title="@string/action_add_routine" />
-    <item
-        android:id="@+id/action_refresh_routines"
-        android:icon="@android:drawable/ic_popup_sync"
-        android:orderInCategory="100"
-        app:showAsAction="ifRoom"
-        android:title="@string/action_refresh_routines" />
 </menu>

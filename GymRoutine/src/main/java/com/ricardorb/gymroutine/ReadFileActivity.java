@@ -54,6 +54,7 @@ public class ReadFileActivity extends ActionBarActivity implements ActionBar.Tab
         //Name of the file
         nameFile = getIntent().getExtras().getString("nameFile");
 
+        //How many days have the file
         readXML();
 
         // Create the adapter that will return a fragment for each of the three

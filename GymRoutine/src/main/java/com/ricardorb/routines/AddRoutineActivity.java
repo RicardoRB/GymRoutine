@@ -93,7 +93,6 @@ public class AddRoutineActivity extends ActionBarActivity {
                     File fileRoutine = new File(Environment.getExternalStorageDirectory()
                             + File.separator + "GymRoutines"+File.separator+et.getText().toString()+".gym");
 
-
                     if (et.getText().length() <= 0) {
                         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                         builder.setTitle(getResources().getString(R.string.alert_title_nameRoutine));
@@ -121,6 +120,7 @@ public class AddRoutineActivity extends ActionBarActivity {
                         Intent i = new Intent(getActivity(), DaysRoutineActivity.class);
                         i.putExtra("numDays", sp.getSelectedItemPosition() + 1);
                         i.putExtra("nameRoutine", et.getText().toString().replace(" ", ""));
+                        i.putExtra("modify",false);
                         getActivity().startActivity(i);
                     }
                 }

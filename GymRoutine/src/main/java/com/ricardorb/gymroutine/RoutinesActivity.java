@@ -26,6 +26,7 @@ import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.ricardorb.adapters.ListRoutinesAdapter;
 import com.ricardorb.routines.AddRoutineActivity;
+import com.ricardorb.routines.DaysRoutineActivity;
 
 import java.io.File;
 
@@ -36,6 +37,12 @@ public class RoutinesActivity extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         setHasOptionsMenu(true);
         super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        refreshRoutines();
     }
 
     @Override
@@ -55,13 +62,14 @@ public class RoutinesActivity extends Fragment {
             case R.id.action_music_routines:
                 startActivity(new Intent(MediaStore.INTENT_ACTION_MUSIC_PLAYER));
                 return true;
-            case R.id.action_refresh_routines:
-                ListRoutinesAdapter adapter = new ListRoutinesAdapter(getActivity());
-                lv.setAdapter(adapter);
-                Toast.makeText(getActivity(), getResources().getString(R.string.toast_refresh_files), Toast.LENGTH_LONG).show();
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    private void refreshRoutines() {
+        ListRoutinesAdapter adapter = new ListRoutinesAdapter(getActivity());
+        lv.setAdapter(adapter);
     }
 
     @Override
@@ -69,7 +77,7 @@ public class RoutinesActivity extends Fragment {
                              Bundle savedInstanceState) {
         RelativeLayout rootView = (RelativeLayout) inflater.inflate(R.layout.fragment_routines, container, false);
         lv = (ListView) rootView.findViewById(R.id.listRoutines);
-        AdView adView = (AdView)rootView.findViewById(R.id.routines_adView);
+        AdView adView = (AdView) rootView.findViewById(R.id.routines_adView);
         AdRequest adRequest = new AdRequest.Builder().build();
         adView.loadAd(adRequest);
         ListRoutinesAdapter adapter = new ListRoutinesAdapter(getActivity());
@@ -105,6 +113,11 @@ public class RoutinesActivity extends Fragment {
                                 i.putExtra("nameFile", nameFile);
                                 startActivity(i);
                             } else if (item == 1) {
+                                Intent i = new Intent(getActivity(), DaysRoutineActivity.class);
+                                i.putExtra("nameRoutine", nameFile);
+                                i.putExtra("modify",true);
+                                getActivity().startActivity(i);
+                            } else if (item == 2) {
                                 //The user choose delete then I put another alert saying if he is sure
                                 AlertDialog.Builder deleteDialog =
                                         new AlertDialog.Builder(getActivity());

@@ -9,7 +9,8 @@ tools:context="com.ricardorb.routines.SeeExercisesActivity$PlaceholderFragment">
     android:layout_height="wrap_content"
     android:id="@+id/listRoutines"
     android:fastScrollEnabled="true"
-    android:layout_above="@+id/routines_adView" />
+    android:layout_above="@+id/routines_adView"
+    android:layout_alignParentTop="true" />
 
 <com.google.android.gms.ads.AdView xmlns:ads="http://schemas.android.com/apk/res-auto"
     android:id="@+id/routines_adView"

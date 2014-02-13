@@ -1,6 +1,7 @@
 package com.ricardorb.routines;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.util.List;
@@ -25,6 +26,7 @@ import com.ricardorb.adapters.PagerAdapter;
 import com.ricardorb.gymroutine.MainActivity;
 import com.ricardorb.gymroutine.R;
 
+import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlSerializer;
 
 public class DaysRoutineActivity extends ActionBarActivity implements ActionBar.TabListener {
@@ -37,13 +39,14 @@ public class DaysRoutineActivity extends ActionBarActivity implements ActionBar.
      * may be best to switch to a
      * {@link android.support.v4.app.FragmentStatePagerAdapter}.
      */
-    PagerAdapter mSectionsPagerAdapter;
-    boolean checkedMuscles[];
-    boolean checkedExercises[][][];
-    List<Fragment> fragments = new Vector<Fragment>();
-    int numDays;
-    String nameRoutine;
-    boolean fromMusclesFragments;
+    private PagerAdapter mSectionsPagerAdapter;
+    private boolean checkedMuscles[];
+    private boolean checkedExercises[][][];
+    private List<Fragment> fragments = new Vector<Fragment>();
+    private int numDays;
+    private String nameRoutine;
+    private boolean fromMusclesFragments;
+    private boolean modify;
 
     /**
      * The {@link ViewPager} that will host the section contents.
@@ -59,18 +62,22 @@ public class DaysRoutineActivity extends ActionBarActivity implements ActionBar.
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+        modify = getIntent().getExtras().getBoolean("modify");
         numDays = getIntent().getExtras().getInt("numDays");
 
         //Name of the file
         nameRoutine = getIntent().getExtras().getString("nameRoutine");
+        if (modify) {
+            try {
+                nameRoutine = nameRoutine.substring(0, nameRoutine.indexOf("."));
+            } catch (IndexOutOfBoundsException e) {
+                //Can not substring when is modifying exercises
+            }
+        }
         if (getIntent().getExtras().getBooleanArray("checkedBoolean") != null) {
             this.fromMusclesFragments = false;
             if (savedInstanceState != null) {
                 checkedMuscles = savedInstanceState.getBooleanArray("checkedMuscles");
-            } else {
-                checkedMuscles = getIntent().getExtras().getBooleanArray("checkedBoolean");
-            }
-            if (savedInstanceState != null) {
 
                 int iLength = savedInstanceState.getInt("iLength");
                 int jLength = savedInstanceState.getInt("jLength");
@@ -86,19 +93,11 @@ public class DaysRoutineActivity extends ActionBarActivity implements ActionBar.
                 this.checkedExercises = exercises.clone();
 
             } else {
-                int maxNumExercises = 0;
-                int maxExercises[] = {getResources().getStringArray(R.array.array_legs_exercises).length, getResources().getStringArray(R.array.array_abdominals_exercises).length
-                        , getResources().getStringArray(R.array.array_back_exercises).length, getResources().getStringArray(R.array.array_biceps_exercises).length
-                        , getResources().getStringArray(R.array.array_biceps_exercises).length, getResources().getStringArray(R.array.array_cardio_exercises).length
-                        , getResources().getStringArray(R.array.array_chest_exercises).length, getResources().getStringArray(R.array.array_triceps_exercises).length
-                        , getResources().getStringArray(R.array.array_forearms_exercises).length, getResources().getStringArray(R.array.array_shoulders_exercises).length};
-                for (int max : maxExercises) {
-                    if (max > maxNumExercises) {
-                        maxNumExercises = max;
-                    }
+                checkedMuscles = getIntent().getExtras().getBooleanArray("checkedBoolean");
+                checkedExercises = new boolean[numDays][getResources().getStringArray(R.array.array_muscles).length][numMaxExercises()];
+                if (modify) {
+                    readXMLBooleansExercises();
                 }
-
-                checkedExercises = new boolean[numDays][getResources().getStringArray(R.array.array_muscles).length][maxNumExercises];
             }
 
             for (int i = 0; i < numDays; i++) {
@@ -106,7 +105,12 @@ public class DaysRoutineActivity extends ActionBarActivity implements ActionBar.
             }
 
         } else {
+            if (modify && numDays < 1) {
+                readXMLNumMaxDays();
+            }
             fromMusclesFragments = true;
+
+
             // Create the adapter that will return a fragment for each of the three
             // primary sections of the activity.
             for (int i = 0; i < numDays; i++) {
@@ -116,6 +120,10 @@ public class DaysRoutineActivity extends ActionBarActivity implements ActionBar.
                 checkedMuscles = savedInstanceState.getBooleanArray("checkedMuscles");
             } else {
                 checkedMuscles = new boolean[numDays * getResources().getStringArray(R.array.array_muscles).length];
+            }
+            if (modify) {
+                checkedExercises = new boolean[numDays][getResources().getStringArray(R.array.array_muscles).length][numMaxExercises()];
+                readXMLBooleansMuscles();
             }
         }
         mSectionsPagerAdapter = new PagerAdapter(this.getSupportFragmentManager(), fragments);
@@ -147,15 +155,35 @@ public class DaysRoutineActivity extends ActionBarActivity implements ActionBar.
         }
     }
 
+    private int numMaxExercises() {
+        int maxNumExercises = 0;
+        int maxExercises[] = {getResources().getStringArray(R.array.array_legs_exercises).length, getResources().getStringArray(R.array.array_abdominals_exercises).length
+                , getResources().getStringArray(R.array.array_back_exercises).length, getResources().getStringArray(R.array.array_biceps_exercises).length
+                , getResources().getStringArray(R.array.array_biceps_exercises).length, getResources().getStringArray(R.array.array_cardio_exercises).length
+                , getResources().getStringArray(R.array.array_chest_exercises).length, getResources().getStringArray(R.array.array_triceps_exercises).length
+                , getResources().getStringArray(R.array.array_forearms_exercises).length, getResources().getStringArray(R.array.array_shoulders_exercises).length};
+        for (int max : maxExercises) {
+            if (max > maxNumExercises) {
+                maxNumExercises = max;
+            }
+        }
+        return maxNumExercises;
+    }
+
     @Override
     public Intent getSupportParentActivityIntent() {
         if (getIntent().getExtras().getBooleanArray("checkedBoolean") != null) {
             Intent i = new Intent(this, DaysRoutineActivity.class);
             i.putExtra("numDays", this.numDays);
             i.putExtra("nameRoutine", this.nameRoutine);
+            i.putExtra("modify", this.modify);
             return i;
         } else {
-            return new Intent(this, AddRoutineActivity.class);
+            if (modify) {
+                return new Intent(this, MainActivity.class);
+            } else {
+                return new Intent(this, AddRoutineActivity.class);
+            }
         }
     }
 
@@ -178,6 +206,7 @@ public class DaysRoutineActivity extends ActionBarActivity implements ActionBar.
             i.putExtra("checkedBoolean", this.checkedMuscles);
             i.putExtra("numDays", this.numDays);
             i.putExtra("nameRoutine", this.nameRoutine);
+            i.putExtra("modify", this.modify);
             startActivity(i);
             return true;
         } else if (id == R.id.action_routineDone && !fromMusclesFragments) {
@@ -349,6 +378,162 @@ public class DaysRoutineActivity extends ActionBarActivity implements ActionBar.
             }
         }
         return -1;
+    }
+
+
+    private void readXMLNumMaxDays() {
+
+        FileInputStream fin = null;
+
+        try {
+            fin = new FileInputStream(Environment.getExternalStorageDirectory()
+                    + File.separator + "GymRoutines" + File.separator + this.nameRoutine + ".gym");
+        } catch (Exception e) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle(getResources().getString(R.string.alert_title_errorOpenFile));
+            builder.setMessage(getResources().getString(R.string.alert_message_errorOpenFile) + " " + e.getMessage());
+            builder.setPositiveButton("OK", null);
+            builder.setIcon(R.drawable.ic_launcher);
+            builder.create().show();
+        }
+        XmlPullParser parser = Xml.newPullParser();
+
+        try {
+            parser.setInput(fin, "UTF-8");
+            int event = parser.next();
+            while (event != XmlPullParser.END_DOCUMENT) {
+                //Days
+                if (event == XmlPullParser.START_TAG) {
+                    if (parser.getName().equals("Day")) {
+                        this.numDays++;
+                    }
+                }
+                event = parser.next();
+            }
+            fin.close();
+        } catch (Exception e) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle(getResources().getString(R.string.alert_title_errorOpenFile));
+            builder.setMessage(getResources().getString(R.string.alert_message_errorOpenFile) + " " + e.getMessage());
+            builder.setPositiveButton("OK", null);
+            builder.setIcon(R.drawable.ic_launcher);
+            builder.create().show();
+        }
+    }
+
+    public void readXMLBooleansMuscles(){
+
+        FileInputStream fin = null;
+
+        try {
+            fin = new FileInputStream(Environment.getExternalStorageDirectory()
+                    + File.separator + "GymRoutines" + File.separator + nameRoutine + ".gym");
+        } catch (Exception e) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle(getResources().getString(R.string.alert_title_errorOpenFile));
+            builder.setMessage(getResources().getString(R.string.alert_message_errorOpenFile) + " " + e.getMessage());
+            builder.setPositiveButton("OK", null);
+            builder.setIcon(R.drawable.ic_launcher);
+            builder.create().show();
+        }
+
+        try {
+
+            XmlPullParser parser = Xml.newPullParser();
+            int numDay = -1;
+            int numMuscle = -1;
+
+            parser.setInput(fin, "UTF-8");
+            while (parser.next() != XmlPullParser.END_DOCUMENT) {
+                if (parser.getEventType() != XmlPullParser.START_TAG) {
+                    continue;
+                }
+                //I get the name
+                String name = parser.getName();
+                //Always Day will be the first tag to found
+                if (name.equals("Day")) {
+                    //I take what number of day is that day
+                    numDay = Integer.parseInt(parser.getAttributeValue(null, "num"));
+                } else if (name.equals("Muscle")) {
+                    //Taking the numMuscle of every muscle I seek,
+                    //the parser will not coming back here until
+                    //each exercise of this muscle is read
+                    numMuscle = Integer.parseInt(parser.getAttributeValue(null, "num"));
+                    int numMuscles = getResources().getStringArray(R.array.array_muscles).length;
+                    int indexDayArray = (((numDay+1) * numMuscles) - numMuscles);
+                    checkedMuscles[indexDayArray + numMuscle] = true;
+                }
+            }
+            fin.close();
+        } catch (Exception e) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle(getResources().getString(R.string.alert_title_errorOpenFile));
+            builder.setMessage(getResources().getString(R.string.alert_message_errorOpenFile) + " " + e.getMessage());
+            builder.setPositiveButton("OK", null);
+            builder.setIcon(R.drawable.ic_launcher);
+            builder.create().show();
+        }
+
+    }
+
+
+    public void readXMLBooleansExercises() {
+
+        FileInputStream fin = null;
+
+        try {
+            fin = new FileInputStream(Environment.getExternalStorageDirectory()
+                    + File.separator + "GymRoutines" + File.separator + nameRoutine + ".gym");
+        } catch (Exception e) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle(getResources().getString(R.string.alert_title_errorOpenFile));
+            builder.setMessage(getResources().getString(R.string.alert_message_errorOpenFile) + " " + e.getMessage());
+            builder.setPositiveButton("OK", null);
+            builder.setIcon(R.drawable.ic_launcher);
+            builder.create().show();
+        }
+
+        try {
+
+            XmlPullParser parser = Xml.newPullParser();
+            int numDay = -1;
+            int numMuscle = -1;
+
+            parser.setInput(fin, "UTF-8");
+            while (parser.next() != XmlPullParser.END_DOCUMENT) {
+                if (parser.getEventType() != XmlPullParser.START_TAG) {
+                    continue;
+                }
+                //I get the name
+                String name = parser.getName();
+                //Always Day will be the first tag to found
+                if (name.equals("Day")) {
+                    //I take what number of day is that day
+                    numDay = Integer.parseInt(parser.getAttributeValue(null, "num"));
+                } else if (name.equals("Muscle")) {
+                    //Taking the numMuscle of every muscle I seek,
+                    //the parser will not coming back here until
+                    //each exercise of this muscle is read
+                    numMuscle = Integer.parseInt(parser.getAttributeValue(null, "num"));
+                } else if (name.equals("Exercise")) {
+                    int numMuscles = getResources().getStringArray(R.array.array_muscles).length;
+                    int indexDayArray = (((numDay+1) * numMuscles) - numMuscles);
+                    if (checkedMuscles[indexDayArray + numMuscle]) {
+                        int numExercise = Integer.parseInt(parser.getAttributeValue(null, "num"));
+                        checkedExercises[numDay][numMuscle][numExercise] = true;
+                    }
+                }
+            }
+            fin.close();
+        } catch (Exception e) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle(getResources().getString(R.string.alert_title_errorOpenFile));
+            builder.setMessage(getResources().getString(R.string.alert_message_errorOpenFile) + " " + e.getMessage());
+            builder.setPositiveButton("OK", null);
+            builder.setIcon(R.drawable.ic_launcher);
+            builder.create().show();
+        }
+
     }
 
     public void createXML() {

@@ -12,10 +12,6 @@
           </set>
         </option>
       </GradleProjectSettings>
-      <GradleProjectSettings>
-        <option name="distributionType" value="DEFAULT_WRAPPED" />
-        <option name="externalProjectPath" value="C:\Users\Ricardo\AndroidStudioProjects\GymRoutine" />
-      </GradleProjectSettings>
     </option>
   </component>
 </project>

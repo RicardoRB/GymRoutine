@@ -34,11 +34,15 @@ public class ChooseMusclesActivity extends Fragment {
         } else {
             fragmentDay = ((DaysRoutineActivity) getActivity()).getFragmentDay(this);
         }
-        numMuscles = getResources().getStringArray(R.array.array_muscles).length;
+        numMuscles = muscles.length;
         indexDayArray = (fragmentDay == 1 ? 0 : ((fragmentDay * numMuscles) - numMuscles));
         checked = ((DaysRoutineActivity) getActivity()).getCheckedMuscles();
+
         lv.setAdapter(new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_multiple_choice, muscles));
         lv.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
+        for(int i = 0;i < numMuscles; i++){
+            lv.setItemChecked(i, checked[indexDayArray + i]);
+        }
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {

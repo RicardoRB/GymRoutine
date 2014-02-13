@@ -49,13 +49,8 @@ public class ListRoutinesAdapter extends BaseAdapter {
                         + File.separator + "GymRoutines");
 
                 if (!directory.exists()) {
-                    if (directory.mkdir()) {
-                        Toast.makeText(
-                                mContext,
-                                c.getResources().getString(R.string.alert_message_createFolder)
-                                        + directory.getPath(), Toast.LENGTH_SHORT)
-                                .show();
-                    }
+                    directory.mkdir();
+
                 }
                 filesDirectory = directory.listFiles();
 
