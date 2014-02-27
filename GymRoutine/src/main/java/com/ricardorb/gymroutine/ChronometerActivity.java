@@ -11,7 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.Chronometer;
+import com.ricardorb.modify_widgets.Chronometer;
 import android.os.SystemClock;
 import android.view.View.OnClickListener;
 
@@ -47,7 +47,7 @@ public class ChronometerActivity extends Fragment {
         AdRequest adRequest = new AdRequest.Builder().build();
         adView.loadAd(adRequest);
 
-        this.crono = (Chronometer) rootView.findViewById(R.id.cm_cronometro);
+        this.crono = (Chronometer) rootView.findViewById(R.id.cm_chronometer);
 
         this.btnStart = (Button) rootView.findViewById(R.id.btn_start);
         this.btnStart.setOnClickListener(new OnClickListener() {
@@ -61,13 +61,11 @@ public class ChronometerActivity extends Fragment {
                     pause = true;
                 } else {
                     if (pause) {
-                        crono.setBase(crono.getBase()
-                                + SystemClock.elapsedRealtime() - time);
+                        crono.setStarted(true);
                     } else {
-                        crono.setBase(SystemClock.elapsedRealtime());
+                        crono.start();
                     }
                     btnStart.setText(getResources().getString(R.string.btn_pause));
-                    crono.start();
                     running = true;
                     pause = false;
                 }

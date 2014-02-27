@@ -9,7 +9,7 @@
         app:showAsAction="never" />-->
     <item
         android:id="@+id/action_music_routines"
-        android:icon="@android:drawable/stat_sys_headset"
+        android:icon="@drawable/ic_action_headphones"
         android:orderInCategory="100"
         app:showAsAction="ifRoom"
         android:title="@string/action_music" />
