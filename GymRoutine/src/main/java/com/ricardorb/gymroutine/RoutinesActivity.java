@@ -14,10 +14,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.AdapterView.OnItemLongClickListener;
-import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,11 +23,12 @@ import com.google.android.gms.ads.AdView;
 import com.ricardorb.adapters.ListRoutinesAdapter;
 import com.ricardorb.routines.AddRoutineActivity;
 import com.ricardorb.routines.DaysRoutineActivity;
+import com.tjerkw.slideexpandable.library.ActionSlideExpandableListView;
 
 import java.io.File;
 
 public class RoutinesActivity extends Fragment {
-    ListView lv;
+    ActionSlideExpandableListView list;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -69,97 +66,72 @@ public class RoutinesActivity extends Fragment {
 
     private void refreshRoutines() {
         ListRoutinesAdapter adapter = new ListRoutinesAdapter(getActivity());
-        lv.setAdapter(adapter);
+        list.setAdapter(adapter);
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         RelativeLayout rootView = (RelativeLayout) inflater.inflate(R.layout.fragment_routines, container, false);
-        lv = (ListView) rootView.findViewById(R.id.listRoutines);
-        AdView adView = (AdView) rootView.findViewById(R.id.routines_adView);
-        AdRequest adRequest = new AdRequest.Builder().build();
-        adView.loadAd(adRequest);
+        list = (ActionSlideExpandableListView) rootView.findViewById(R.id.list);
         ListRoutinesAdapter adapter = new ListRoutinesAdapter(getActivity());
-        lv.setAdapter(adapter);
-        lv.setOnItemClickListener(new OnItemClickListener() {
+        list.setAdapter(adapter);
+        list.setItemActionListener(new ActionSlideExpandableListView.OnActionClickListener() {
 
             @Override
-            public void onItemClick(AdapterView parent, View view, int position, long id) {
-                // TODO Auto-generated method stub
-                if (view.findViewWithTag(position) != null) {
-                    final String nameFile = ((TextView) view.findViewWithTag(position)).getText().toString() + ".gym";
+            public void onClick(View itemView, View clickedView, int position) {
+                final int clickedId = clickedView.getId();
+                final String nameFile = ((TextView) itemView.findViewWithTag(position)).getText().toString() + ".gym";
+                if (clickedId == R.id.itemList || clickedId == R.id.btn_Open) {
+                    //Open routine
                     Intent i = new Intent(getActivity(), ReadFileActivity.class);
                     i.putExtra("nameFile", nameFile);
                     startActivity(i);
-                }
-            }
-        });
-        //I create a AlertDialog with options when the user do a long click in the item
-        lv.setOnItemLongClickListener(new OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView parent, final View v, final int position, long id) {
-                // TODO Auto-generated method stub
-                if (v.findViewWithTag(position) != null) {
-                    AlertDialog.Builder options =
+                }else if(clickedId == R.id.btn_Modify){
+                    //Modify button clicked
+                    Intent i = new Intent(getActivity(), DaysRoutineActivity.class);
+                    i.putExtra("nameRoutine", nameFile);
+                    i.putExtra("modify",true);
+                    getActivity().startActivity(i);
+                }else if(clickedId == R.id.btn_Share){
+                    //Share button clicked
+                    Intent intent = new Intent(android.content.Intent.ACTION_SEND);
+                    intent.setType("*/*");
+                    intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(Environment.getExternalStorageDirectory()
+                            + File.separator + "GymRoutines" + File.separator + nameFile)));
+                    startActivity(Intent.createChooser(intent, "GymRoutines"));
+                }else{
+                    //The user choose delete then I put another alert saying if he is sure
+                    AlertDialog.Builder deleteDialog =
                             new AlertDialog.Builder(getActivity());
-                    String[] items = getResources().getStringArray(R.array.array_options_files);
-                    options.setTitle(getResources().getString(R.string.alert_title_options_files)).setItems(items, new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int item) {
 
-                            final String nameFile = ((TextView) v.findViewWithTag(position)).getText().toString() + ".gym";
-                            if (item <= 0) {
-                                Intent i = new Intent(getActivity(), ReadFileActivity.class);
-                                i.putExtra("nameFile", nameFile);
-                                startActivity(i);
-                            } else if (item == 1) {
-                                Intent i = new Intent(getActivity(), DaysRoutineActivity.class);
-                                i.putExtra("nameRoutine", nameFile);
-                                i.putExtra("modify",true);
-                                getActivity().startActivity(i);
-                            } else if (item == 2) {
-                                //The user choose delete then I put another alert saying if he is sure
-                                AlertDialog.Builder deleteDialog =
-                                        new AlertDialog.Builder(getActivity());
-
-                                deleteDialog.setMessage(getResources().getString(R.string.alert_message_delete_file))
-                                        .setTitle(nameFile)
-                                        .setPositiveButton(getResources().getString(R.string.alert_buttons_yes), new DialogInterface.OnClickListener() {
-                                            public void onClick(DialogInterface dialog, int id) {
-                                                File deleteFile = new File(Environment.getExternalStorageDirectory()
-                                                        + File.separator + "GymRoutines" + File.separator + nameFile);
-                                                if (deleteFile.delete()) {
-                                                    ListRoutinesAdapter adapter = new ListRoutinesAdapter(getActivity());
-                                                    lv.setAdapter(adapter);
-                                                    Toast.makeText(getActivity(), nameFile + getResources().getString(R.string.toast_delete_file), Toast.LENGTH_LONG).show();
-                                                }
-                                                dialog.cancel();
-                                            }
-                                        })
-                                        .setNegativeButton(getResources().getString(R.string.alert_buttons_no), new DialogInterface.OnClickListener() {
-                                            public void onClick(DialogInterface dialog, int id) {
-                                                dialog.cancel();
-                                            }
-                                        });
-                                deleteDialog.create();
-                                deleteDialog.show();
-                            } else {
-                                Intent intent = new Intent(android.content.Intent.ACTION_SEND);
-                                intent.setType("*/*");
-                                intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(Environment.getExternalStorageDirectory()
-                                        + File.separator + "GymRoutines" + File.separator + nameFile)));
-                                startActivity(Intent.createChooser(intent, "GymRoutines"));
-
-                            }
-
-                        }
-                    });
-                    options.create();
-                    options.show();
+                    deleteDialog.setMessage(getResources().getString(R.string.alert_message_delete_file))
+                            .setTitle(nameFile)
+                            .setPositiveButton(getResources().getString(R.string.alert_buttons_yes), new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    File deleteFile = new File(Environment.getExternalStorageDirectory()
+                                            + File.separator + "GymRoutines" + File.separator + nameFile);
+                                    if (deleteFile.delete()) {
+                                        refreshRoutines();
+                                        Toast.makeText(getActivity(), nameFile + getResources().getString(R.string.toast_delete_file), Toast.LENGTH_LONG).show();
+                                    }
+                                    dialog.cancel();
+                                }
+                            })
+                            .setNegativeButton(getResources().getString(R.string.alert_buttons_no), new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    dialog.cancel();
+                                }
+                            });
+                    deleteDialog.create();
+                    deleteDialog.show();
                 }
-                return false;
             }
-        });
+        },R.id.itemList, R.id.btn_Open, R.id.btn_Modify, R.id.btn_Share, R.id.btn_Delete);
+        AdView adView = (AdView) rootView.findViewById(R.id.routines_adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        adView.loadAd(adRequest);
+
         return rootView;
     }
+
 }

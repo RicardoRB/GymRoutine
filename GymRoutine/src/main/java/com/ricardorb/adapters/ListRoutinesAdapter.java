@@ -44,7 +44,6 @@ public class ListRoutinesAdapter extends BaseAdapter {
                 .equals(Environment.MEDIA_MOUNTED);
         if (isSDPresent) {
             try {
-                addSeparatorItem("SD");
                 directory = new File(Environment.getExternalStorageDirectory()
                         + File.separator + "GymRoutines");
 
@@ -106,13 +105,6 @@ public class ListRoutinesAdapter extends BaseAdapter {
         notifyDataSetChanged();
     }
 
-    public void addSeparatorItem(final String item) {
-        mData.add(item);
-        // save separator position
-        mSeparatorsSet.add(mData.size() - 1);
-        notifyDataSetChanged();
-    }
-
     @Override
     public int getItemViewType(int position) {
         return mSeparatorsSet.contains(position) ? TYPE_SEPARATOR : TYPE_ITEM;
@@ -137,35 +129,19 @@ public class ListRoutinesAdapter extends BaseAdapter {
 
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder;
-        int type = getItemViewType(position);
         if (convertView == null) {
             holder = new ViewHolder();
-            switch (type) {
-                case TYPE_ITEM:
-                    convertView = mInflater.inflate(R.layout.list_item_routines_files, null);
+                    convertView = mInflater.inflate(R.layout.expandable_list_item, null);
                     holder.textViewNam = (TextView) convertView.findViewById(R.id.nameFile);
                     holder.textViewSub = (TextView) convertView.findViewById(R.id.lastModified);
-                    break;
-                case TYPE_SEPARATOR:
-                    convertView = mInflater.inflate(R.layout.list_item_section, null);
-                    holder.textViewNam = (TextView) convertView.findViewById(R.id.list_item_section_text);
-                    break;
-            }
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
-        switch (type) {
-            case TYPE_ITEM:
-                DateFormat df = DateFormat.getDateInstance(DateFormat.FULL, mContext.getResources().getConfiguration().locale);
-                holder.textViewNam.setText(mData.get(position));
-                holder.textViewNam.setTag(position);
-                holder.textViewSub.setText(df.format(dateFiles[position-1]));
-                break;
-            case TYPE_SEPARATOR:
-                holder.textViewNam.setText(mData.get(position));
-                break;
-        }
+        DateFormat df = DateFormat.getDateInstance(DateFormat.FULL, mContext.getResources().getConfiguration().locale);
+        holder.textViewNam.setText(mData.get(position));
+        holder.textViewNam.setTag(position);
+        holder.textViewSub.setText(df.format(dateFiles[position]));
         return convertView;
     }
 
