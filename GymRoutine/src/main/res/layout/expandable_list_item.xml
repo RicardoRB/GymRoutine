@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:slide="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/itemList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/iconImage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scaleType="fitStart"
+            android:src="@android:drawable/ic_menu_agenda" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:id="@+id/textFiles"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@+id/iconImage">
+
+            <TextView
+                android:id="@+id/nameFile"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:textAppearanceLarge"/>
+
+            <TextView
+                android:id="@+id/lastModified"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:textAppearanceSmall" />
+
+        </LinearLayout>
+
+        <ImageButton
+            android:id="@+id/expandable_toggle_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/textFiles"
+            android:layout_alignParentRight="true"
+            android:layout_alignTop="@id/textFiles"
+            android:textAppearance="?android:textAppearanceSmall"
+            android:src="@drawable/ic_action_expand"
+            android:background="@drawable/background_button_toggle"
+            android:contentDescription="expandButton" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/expandable"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#C8C8C8"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:id="@+id/btn_Open"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="0.5"
+            android:src="@drawable/ic_action_collection"
+            android:textSize="12dip" />
+
+        <ImageButton
+            android:id="@+id/btn_Modify"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="0.5"
+            android:src="@drawable/ic_action_edit"
+            android:textSize="12dip" />
+
+        <ImageButton
+            android:id="@+id/btn_Share"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="0.5"
+            android:src="@drawable/ic_action_share"
+            android:textSize="12dip" />
+
+        <ImageButton
+            android:id="@+id/btn_Delete"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="0.5"
+            android:text="Delete"
+            android:src="@drawable/ic_action_discard"
+            android:textSize="12dip" />
+
+    </LinearLayout>
+</LinearLayout>
