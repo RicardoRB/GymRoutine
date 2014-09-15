@@ -1,23 +1,16 @@
 package com.ricardorb.routines;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.util.List;
-import java.util.Vector;
-
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Environment;
-import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.ActionBar;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.os.Bundle;
+import android.os.Environment;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Xml;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -28,6 +21,13 @@ import com.ricardorb.gymroutine.R;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlSerializer;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.util.List;
+import java.util.Vector;
 
 public class DaysRoutineActivity extends ActionBarActivity implements ActionBar.TabListener {
 

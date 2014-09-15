@@ -1,11 +1,10 @@
 package com.ricardorb.adapters;
 
-import java.util.ArrayList;
-
 import android.app.Dialog;
 import android.content.Context;
 import android.content.res.Resources;
-import android.graphics.drawable.Drawable;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +19,8 @@ import com.ricardorb.listview_custom_sections.EntryItem;
 import com.ricardorb.listview_custom_sections.Item;
 import com.ricardorb.listview_custom_sections.SectionItem;
 import com.ricardorb.routines.DaysRoutineActivity;
+
+import java.util.ArrayList;
 
 public class EntryAdapter extends ArrayAdapter<Item> {
 
@@ -80,16 +81,27 @@ public class EntryAdapter extends ArrayAdapter<Item> {
                             Resources standardResources = mContext.getResources();
 
                             //Taking the picture for that exercise
-                            String[] muscles = {"chest", "back", "biceps", "triceps", "shoulders", "legs", "forearms", "abdominals", "cardio"};
-                            String mDrawableName = (muscles[ei.getNumMuscle()] + "_" + ei.getNumExercise()).toLowerCase();
+                            final String[] muscles = mContext.getResources().getStringArray(R.array.array_muscles);
+                            final String mDrawableName = (muscles[ei.getNumMuscle()] + "_" + ei.getNumExercise()).toLowerCase();
                             int resID = standardResources.getIdentifier(mDrawableName, "drawable", mContext.getPackageName());
-                            Drawable drawable = standardResources.getDrawable(resID);
 
-                            Dialog dialog = new Dialog(mContext);
+                            final Dialog dialog = new Dialog(mContext);
                             dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                             dialog.setContentView(R.layout.dialog_image);
-                            ImageView image = (ImageView) dialog.findViewById(R.id.imageView);
-                            image.setImageDrawable(drawable);
+
+                            final ImageView image = (ImageView) dialog.findViewById(R.id.imageView);
+                            dialog.setCanceledOnTouchOutside(true);
+
+                            try {
+                                Bitmap bm = BitmapFactory.decodeResource(mContext.getResources(), resID);
+                                image.setImageBitmap(bm);
+                            }catch (OutOfMemoryError ex){
+                                final BitmapFactory.Options options = new BitmapFactory.Options();
+                                options.inSampleSize = 8;
+                                Bitmap bm = BitmapFactory.decodeResource(mContext.getResources(), resID, options);
+                                image.setImageBitmap(bm);
+                            }
+
                             dialog.show();
                         }
                     });
@@ -98,6 +110,24 @@ public class EntryAdapter extends ArrayAdapter<Item> {
                     final EntryItem ei = (EntryItem) item;
                     convertView = vi.inflate(R.layout.list_item_entry, parent, false);
                     final CheckBox sub_cb = (CheckBox) convertView.findViewById(R.id.cb_list_item_entry_summary);
+                    final ImageView image  = (ImageView) convertView.findViewById(R.id.imageViewExercise);
+
+                    final Resources standardResources = mContext.getResources();
+                    //Taking the picture for that exercise
+                    final String[] muscles = mContext.getResources().getStringArray(R.array.array_muscles);
+                    final String mDrawableName = (muscles[ei.getNumMuscle()] + "_" + ei.getNumExercise()).toLowerCase();
+                    final int resID = standardResources.getIdentifier(mDrawableName, "drawable", mContext.getPackageName());
+
+                    try {
+                        Bitmap bm = BitmapFactory.decodeResource(mContext.getResources(), resID);
+                        image.setImageBitmap(bm);
+                    }catch (OutOfMemoryError ex){
+                        final BitmapFactory.Options options = new BitmapFactory.Options();
+                        options.inSampleSize = 8;
+                        Bitmap bm = BitmapFactory.decodeResource(mContext.getResources(), resID, options);
+                        image.setImageBitmap(bm);
+                    }
+
 
                     if (sub_cb != null) {
                         sub_cb.setText(ei.title);

@@ -1,9 +1,9 @@
 package com.ricardorb.routines;
 
 import android.app.AlertDialog;
+import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.app.Fragment;
-import android.os.Bundle;
 import android.util.Xml;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,9 +12,9 @@ import android.widget.ListView;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+import com.ricardorb.adapters.EntryAdapter;
 import com.ricardorb.gymroutine.R;
 import com.ricardorb.gymroutine.ReadFileActivity;
-import com.ricardorb.adapters.EntryAdapter;
 import com.ricardorb.listview_custom_sections.EntryItem;
 import com.ricardorb.listview_custom_sections.Item;
 import com.ricardorb.listview_custom_sections.SectionItem;

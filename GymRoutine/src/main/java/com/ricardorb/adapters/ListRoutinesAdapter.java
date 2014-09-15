@@ -1,12 +1,5 @@
 package com.ricardorb.adapters;
 
-import java.io.File;
-import java.text.DateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.TreeSet;
-
-
 import android.content.Context;
 import android.os.Environment;
 import android.view.LayoutInflater;
@@ -18,6 +11,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ricardorb.gymroutine.R;
+
+import java.io.File;
+import java.text.DateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.TreeSet;
 
 public class ListRoutinesAdapter extends BaseAdapter {
     private Context mContext;
@@ -49,7 +48,6 @@ public class ListRoutinesAdapter extends BaseAdapter {
 
                 if (!directory.exists()) {
                     directory.mkdir();
-
                 }
                 filesDirectory = directory.listFiles();
 

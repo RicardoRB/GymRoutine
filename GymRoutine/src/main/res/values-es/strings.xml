@@ -2,6 +2,7 @@
 <resources>
 
     <string name="app_name">GymRoutine</string>
+    <string name="my_name">Ricardo Romero Benítez</string>
     <!-- Activities titles -->
     <string name="title_activity_chronometer">Cronómetro</string>
     <string name="title_activity_routines">Rutinas</string>
@@ -10,6 +11,7 @@
     <string name="title_activity_choose_exercises">Elegir Ejercicios</string>
     <string name="title_activity_read_file">Leer Archivo</string>
     <string name="title_activity_see_exercises">Ver Ejercicios</string>
+    <string name="title_activity_about">Acerca de</string>
     <!-- Submenus -->
     <string name="action_settings">Opciones</string>
     <string name="action_music">Música</string>
@@ -22,12 +24,17 @@
     <string name="btn_start">Iniciar</string>
     <string name="btn_pause">Pausar</string>
     <string name="btn_next">Siguiente</string>
+    <string name="btn_facebook">Facebook</string>
+    <string name="btn_twitter">Twitter</string>
+    <string name="btn_linkedin">Linkedin</string>
     <!-- Tags -->
     <string name="txt_routineName">Nombre de la Rutina</string>
     <string name="txt_daysWeek">Días de la Rutina</string>
     <string name="txt_sets">Series</string>
     <string name="txt_repetitions">Repeticiones</string>
     <string name="txt_time">Tiempo</string>
+    <string name="txt_version">Versión</string>
+    <string name="txt_author">Autor</string>
     <!-- Arrays -->
     <string-array name="array_muscles">
         <item>Pecho</item>
@@ -302,6 +309,12 @@
         <item>Eliminar</item>
         <item>Compartir</item>
     </string-array>
+    <string-array name="array_drawer">
+        <item>Mándame tu opinión</item>
+        <item>Califica GymRoutine</item>
+        <item>Compartir</item>
+        <item>Acerca de</item>
+    </string-array>
     <!-- Context Menu -->
     <string name="context_open">Abrir</string>
     <string name="context_modify">Modificar</string>
@@ -331,5 +344,11 @@
     <!-- Toast -->
     <string name="toast_delete_file">fue eliminado.</string>
     <string name="toast_refresh_files">La lista de archivo de rutinas fue refrescado</string>
+    <!-- Others -->
+    <string name="drawer_open">Drawer abierto</string>
+    <string name="drawer_close">Drawer cerrado</string>
+    <string name="share_text">¡Echa un vistazo a esta increible aplicación para el gimnasio!</string>
+
+
 
 </resources>

@@ -2,6 +2,7 @@
 <resources>
 
     <string name="app_name">GymRoutine</string>
+    <string name="my_name">Ricardo Romero Benítez</string>
     <!-- Activities titles -->
     <string name="title_activity_chronometer">Chronometer</string>
     <string name="title_activity_routines">Routines</string>
@@ -10,6 +11,7 @@
     <string name="title_activity_choose_exercises">Choose Exercises</string>
     <string name="title_activity_read_file">Read File</string>
     <string name="title_activity_see_exercises">See Exercises</string>
+    <string name="title_activity_about">About</string>
     <!-- Submenus -->
     <string name="action_settings">Settings</string>
     <string name="action_music">Music</string>
@@ -22,12 +24,17 @@
     <string name="btn_start">Start</string>
     <string name="btn_pause">Pause</string>
     <string name="btn_next">Next</string>
+    <string name="btn_facebook">Facebook</string>
+    <string name="btn_twitter">Twitter</string>
+    <string name="btn_linkedin">Linkedin</string>
     <!-- Tags -->
     <string name="txt_routineName">Routine Name</string>
     <string name="txt_daysWeek">Days of Routine</string>
     <string name="txt_sets">Sets</string>
     <string name="txt_repetitions">Repetitions</string>
     <string name="txt_time">Time</string>
+    <string name="txt_version">Version</string>
+    <string name="txt_author">Author</string>
     <!-- Arrays -->
     <string-array name="array_muscles">
         <item>Chest</item>
@@ -302,6 +309,12 @@
         <item>Delete</item>
         <item>Share</item>
     </string-array>
+    <string-array name="array_drawer">
+        <item>Send Feedback</item>
+        <item>Rate GymRoutine</item>
+        <item>Share</item>
+        <item>About</item>
+    </string-array>
     <!-- Context Menu -->
     <string name="context_open">Open</string>
     <string name="context_modify">Modify</string>
@@ -331,5 +344,9 @@
     <!-- Toast -->
     <string name="toast_delete_file">was deleted.</string>
     <string name="toast_refresh_files">Routines list files was refreshed</string>
+    <!-- Others -->
+    <string name="drawer_open">Drawer open</string>
+    <string name="drawer_close">Drawer close</string>
+    <string name="share_text">Take a look at this awesome application to gym!</string>
 
 </resources>

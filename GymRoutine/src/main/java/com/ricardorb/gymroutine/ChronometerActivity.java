@@ -1,22 +1,22 @@
 package com.ricardorb.gymroutine;
 
 import android.content.Intent;
+import android.os.Bundle;
+import android.os.SystemClock;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
-import com.ricardorb.modify_widgets.Chronometer;
-import android.os.SystemClock;
-import android.view.View.OnClickListener;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+import com.ricardorb.modify_widgets.Chronometer;
 
 
 public class ChronometerActivity extends Fragment {

@@ -3,22 +3,22 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:0.9.+'
+        classpath 'com.android.tools.build:gradle:0.12.2'
     }
 }
-apply plugin: 'android'
+apply plugin: 'com.android.application'
 
 repositories {
     mavenCentral()
 }
 
 android {
-    compileSdkVersion 19
-    buildToolsVersion '19.0.3'
+    compileSdkVersion 20
+    buildToolsVersion '20.0.0'
 
     defaultConfig {
-        minSdkVersion 8
-        targetSdkVersion 19
+        minSdkVersion 10
+        targetSdkVersion 20
     }
     buildTypes {
         release {
@@ -29,13 +29,19 @@ android {
     productFlavors {
         defaultFlavor {
             proguardFile 'proguard-rules.txt'
+            minSdkVersion 10
+            targetSdkVersion 20
         }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_6
+        targetCompatibility JavaVersion.VERSION_1_7
     }
 }
 
 dependencies {
-    compile 'com.android.support:support-v4:19.0.0'
-    compile 'com.android.support:appcompat-v7:19.0.0'
-    compile 'com.google.android.gms:play-services:4.1.32'
-    compile project(':libraries:SlideExpandableListView');
+    compile project(':libraries:SlideExpandableListView')
+    compile 'com.android.support:support-v4:20.0.0'
+    compile 'com.android.support:appcompat-v7:20.0.0'
+    compile 'com.google.android.gms:play-services:5.0.89'
 }

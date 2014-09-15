@@ -1,19 +1,14 @@
 package com.ricardorb.gymroutine;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.util.List;
-import java.util.Vector;
-
 import android.app.AlertDialog;
-import android.os.Environment;
-import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.ActionBar;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.os.Bundle;
+import android.os.Environment;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Xml;
 import android.view.Menu;
 
@@ -21,6 +16,11 @@ import com.ricardorb.adapters.PagerAdapter;
 import com.ricardorb.routines.SeeExercisesActivity;
 
 import org.xmlpull.v1.XmlPullParser;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.util.List;
+import java.util.Vector;
 
 public class ReadFileActivity extends ActionBarActivity implements ActionBar.TabListener {
 
