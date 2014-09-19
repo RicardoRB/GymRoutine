@@ -81,7 +81,9 @@ public class EntryAdapter extends ArrayAdapter<Item> {
                             Resources standardResources = mContext.getResources();
 
                             //Taking the picture for that exercise
-                            final String[] muscles = mContext.getResources().getStringArray(R.array.array_muscles);
+                            //I cant take array from resources because I need the names in english
+                            //because pictures start in english
+                            String[] muscles = {"chest", "back", "biceps", "triceps", "shoulders", "legs", "forearms", "abdominals", "cardio"};
                             final String mDrawableName = (muscles[ei.getNumMuscle()] + "_" + ei.getNumExercise()).toLowerCase();
                             int resID = standardResources.getIdentifier(mDrawableName, "drawable", mContext.getPackageName());
 
@@ -114,7 +116,9 @@ public class EntryAdapter extends ArrayAdapter<Item> {
 
                     final Resources standardResources = mContext.getResources();
                     //Taking the picture for that exercise
-                    final String[] muscles = mContext.getResources().getStringArray(R.array.array_muscles);
+                    //I cant take array from resources because I need the names in english
+                    //because pictures start in english
+                    String[] muscles = {"chest", "back", "biceps", "triceps", "shoulders", "legs", "forearms", "abdominals", "cardio"};
                     final String mDrawableName = (muscles[ei.getNumMuscle()] + "_" + ei.getNumExercise()).toLowerCase();
                     final int resID = standardResources.getIdentifier(mDrawableName, "drawable", mContext.getPackageName());
 

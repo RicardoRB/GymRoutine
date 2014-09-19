@@ -75,7 +75,6 @@ public class ListRoutinesAdapter extends BaseAdapter {
                 }
 
             } catch (Exception e) {
-                // TODO: handle exception
                 Toast.makeText(mContext, "Error: " + e.getMessage(),
                         Toast.LENGTH_SHORT).show();
             }
@@ -149,7 +148,6 @@ public class ListRoutinesAdapter extends BaseAdapter {
     }
 
     public boolean onTouch(View v, MotionEvent event) {
-        // TODO Auto-generated method stub
         return false;
     }
 
