@@ -15,7 +15,6 @@
         </option>
       </GradleProjectSettings>
     </option>
-    <option name="gradleVmOptions" value="-Dhttp.proxyHost=proxyinternet.tesa -Dhttp.proxyPort=8080" />
   </component>
 </project>
 
